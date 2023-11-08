@@ -1,0 +1,29 @@
+{
+    "authInfo": "Sign in and select your blog.\nIf you don’t have, create new one",
+    "googleAuth": "Sign in with Google",
+    "createBlog": "Create New Blog",
+    "privacyPolicy": "Privacy Policy",
+    "unknownError": "A problem has occurred",
+    "posts": "Posts",
+    "pages": "Pages",
+    "drafts": "Drafts",
+    "scheduled": "Scheduled",
+    "ascending": "Ascending",
+    "descending": "Descending",
+    "defaultValues": "Clear Filters",
+    "search": "Search..",
+    "noBlog": "You don't have a blog.",
+    "chooseBlog": "Choose Your Blog",
+    "continue": "Continue",
+    "limitedBlogError": "This blog is limited for you.",
+    "noPost": "This place looks empty",
+    "dateTimeFormat": {
+        "today": "today",
+        "yesterday": "yesterday",
+        "daysAgo": "{} days ago",
+        "oneWeekAgo": "1 week ago",
+        "weeksAgo": "{} weeks ago",
+        "monthsAgo": "{} months ago",
+        "yearsAgo": "{} years ago"
+    }
+}
