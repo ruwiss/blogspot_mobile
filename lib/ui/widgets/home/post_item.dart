@@ -5,7 +5,7 @@ import 'package:blogman/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../models/post_model.dart';
+import '../../views/home/models/post_model.dart';
 import '../shared/profile_widget.dart';
 
 class PostItem extends StatelessWidget {
@@ -41,7 +41,9 @@ class PostItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ProfileWidget(postModel: postModel),
+                    ProfileWidget(
+                        authorModel: postModel.author,
+                        date: (postModel.published, postModel.updated)),
                     const SizedBox(height: 20),
                     Text(
                       postModel.title,

@@ -1,14 +1,17 @@
 import 'package:blogman/extensions/datetime_formatter.dart';
 import 'package:blogman/extensions/string_formatter.dart';
+import 'package:blogman/models/author_model.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/images.dart';
 import 'package:flutter/material.dart';
 
-import '../../../models/post_model.dart';
-
 class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({super.key, required this.postModel});
-  final PostModel postModel;
+  const ProfileWidget(
+      {super.key, required this.authorModel, required this.date});
+  final AuthorModel authorModel;
+
+  /// published, updated
+  final (DateTime, DateTime) date;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class ProfileWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           child: Image.asset(
-            postModel.author.imageUrl ?? KImages.avatar,
+            authorModel.imageUrl ?? KImages.avatar,
             width: 35,
             height: 35,
             fit: BoxFit.cover,
@@ -24,7 +27,7 @@ class ProfileWidget extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Text(
-          postModel.author.displayName.formatUserName(),
+          authorModel.displayName.formatUserName(),
           style: const TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w700,
@@ -34,12 +37,10 @@ class ProfileWidget extends StatelessWidget {
         const Spacer(),
         Builder(
           builder: (context) {
-            final DateTime published = postModel.published;
-            final DateTime updated = postModel.updated;
             bool isUpdated = false;
-            if (published != updated) isUpdated = true;
+            if (date.$1 != date.$2) isUpdated = true;
             return Text(
-              (isUpdated ? updated : published)
+              (isUpdated ? date.$2 : date.$1)
                   .formatRelativeDateTime(isUpdated: isUpdated),
               style: const TextStyle(
                 fontSize: 13,

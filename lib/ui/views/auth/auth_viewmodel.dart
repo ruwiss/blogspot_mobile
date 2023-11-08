@@ -1,6 +1,6 @@
 import 'package:blogman/app/locator.dart';
-import 'package:blogman/models/blog_model.dart';
-import 'package:blogman/models/blog_user_info_model.dart';
+import 'package:blogman/ui/views/auth/models/blog_model.dart';
+import 'package:blogman/ui/views/auth/models/blog_user_info_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';

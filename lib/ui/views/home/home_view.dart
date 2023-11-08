@@ -1,7 +1,7 @@
 import 'package:blogman/app/base/base_viewmodel.dart';
 import 'package:blogman/app/locator.dart';
 import 'package:blogman/extensions/notifier.dart';
-import 'package:blogman/models/post_model.dart';
+import 'package:blogman/ui/views/home/models/post_model.dart';
 import 'package:blogman/ui/widgets/home/app_bar/app_bar.dart';
 import 'package:blogman/ui/widgets/home/app_bar/app_bar_viewmodel.dart';
 import 'package:blogman/ui/widgets/home/post_filter.dart';

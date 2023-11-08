@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../models/blog_model.dart';
+import '../../views/auth/models/blog_model.dart';
 import '../../../utils/colors.dart';
 
 class BlogSelectWidget extends StatefulWidget {
