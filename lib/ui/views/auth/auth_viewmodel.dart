@@ -23,6 +23,11 @@ class AuthViewModel extends BaseViewModel {
   BlogModel? selectedBlog;
   BlogUserInfoModel? blogUserInfoModel;
 
+  void setBlogList(List<BlogModel>? blogs) {
+    blogList = blogs;
+    notifyListeners();
+  }
+
   Future<bool> authUser() async {
     setState(ViewState.busy);
     try {
@@ -94,8 +99,7 @@ class AuthViewModel extends BaseViewModel {
 
     if (blogs.isEmpty) return 'noBlog'.tr();
 
-    blogList = blogs;
-    notifyListeners();
+    setBlogList(blogs);
     return null;
   }
 

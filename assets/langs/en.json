@@ -25,5 +25,8 @@
         "weeksAgo": "{} weeks ago",
         "monthsAgo": "{} months ago",
         "yearsAgo": "{} years ago"
-    }
+    },
+    "yourProfile": "Your Profile",
+    "signOut": "Sign Out",
+    "waiting": "Waiting"
 }

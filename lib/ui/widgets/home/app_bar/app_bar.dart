@@ -7,6 +7,7 @@ import 'package:blogman/utils/strings.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/images.dart';
@@ -63,7 +64,9 @@ class _HomeAppBarState extends State<HomeAppBar> {
     return Row(
       key: const Key('title'),
       children: [
-        InkWell(onTap: () {}, child: SvgPicture.asset(KImages.menu)),
+        InkWell(
+            onTap: () => context.pushNamed('profile'),
+            child: SvgPicture.asset(KImages.menu)),
         Expanded(
           child: Text(
             KStrings.appName,

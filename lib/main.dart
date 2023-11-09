@@ -1,5 +1,6 @@
 import 'package:blogman/extensions/theme.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
+import 'package:blogman/ui/views/profile/profile_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,9 @@ class Main extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthViewModel>(
-            create: (context) => locator<AuthViewModel>())
+            create: (context) => locator<AuthViewModel>()),
+        ChangeNotifierProvider<ProfileViewModel>(
+            create: (context) => locator<ProfileViewModel>())
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
