@@ -92,11 +92,11 @@ class HomeViewModel extends BaseViewModel {
         sortOption = SortOption.descending;
         break;
       case OtherFilter.defaultValues:
-        if (sortOption != SortOption.ascending ||
+        if (sortOption != SortOption.descending ||
             postStatus != PostStatus.live) {
-          isFilterChanged = true;
+          clearOrderFilter();
+          getContents();
         }
-        clearOrderFilter();
         break;
     }
     if (isFilterChanged) getContents();
