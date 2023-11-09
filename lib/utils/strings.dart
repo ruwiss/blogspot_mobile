@@ -37,4 +37,7 @@ abstract class KStrings {
 
   static String getSearchList({required String blogId}) =>
       "https://www.googleapis.com/blogger/v3/blogs/$blogId/posts/search";
+
+  static String getStatistics({required String blogId}) =>
+      "https://www.googleapis.com/blogger/v3/blogs/$blogId/pageviews";
 }

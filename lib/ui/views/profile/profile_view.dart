@@ -25,21 +25,24 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      locator<ProfileViewModel>().getBlogsIfNotAvailable();
+      locator<ProfileViewModel>().getProfileValues();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: PageTitle(title: 'yourProfile'.tr()),
       body: Consumer<AuthViewModel>(
         builder: (context, model, child) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ProfileUserInfo(user: model.user!),
             const SizedBox(height: 10),
             ProfileContainer(
+                height: height / 4,
                 title: 'chooseBlog'.tr(),
                 titleBgColor: KColors.bisqueColor,
                 children: [
@@ -65,14 +68,92 @@ class _ProfileViewState extends State<ProfileView> {
                       );
                     }),
                 ]),
-            ProfileContainer(
-              title: 'statistics'.tr(),
-              titleBgColor: KColors.blueSea,
-              children: [],
+            Consumer<ProfileViewModel>(
+              builder: (context, value, child) => ProfileContainer(
+                title: 'statistics'.tr(),
+                titleBgColor: KColors.blueSea,
+                children: [
+                  if (value.statistics == null)
+                    Text('waiting'.tr(), textAlign: TextAlign.center),
+                  if (value.statistics != null) ...[
+                    ProfileContainerTile(
+                      text: 'Week',
+                      suffix: _statisticsViews(value.statistics!.days7),
+                    ),
+                    ProfileContainerTile(
+                      text: 'Month',
+                      suffix: _statisticsViews(value.statistics!.days30),
+                    ),
+                    ProfileContainerTile(
+                      text: 'All',
+                      suffix: _statisticsViews(value.statistics!.all),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ProfileContainerTile(
+                            text:
+                                '${locator<AuthViewModel>().selectedBlog!.posts.totalItems} Posts'),
+                        ProfileContainerTile(
+                            text:
+                                '${locator<AuthViewModel>().selectedBlog!.pages.totalItems} Pages')
+                      ],
+                    )
+                  ]
+                ],
+              ),
             ),
+            _commentsButton()
           ],
         ),
       ),
+    );
+  }
+
+  Widget _commentsButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 35),
+      child: InkWell(
+        onTap: () {},
+        borderRadius: BorderRadius.circular(4),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          decoration: BoxDecoration(
+            color: KColors.grayButton,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            'comments'.tr(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              color: Colors.black.withOpacity(.7),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row _statisticsViews(String value) {
+    return Row(
+      children: [
+        Text(
+          value,
+          style: TextStyle(
+            color: Colors.black.withOpacity(.6),
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(width: 4),
+        const Icon(
+          Icons.remove_red_eye,
+          color: KColors.blueGray,
+          size: 20,
+        )
+      ],
     );
   }
 }

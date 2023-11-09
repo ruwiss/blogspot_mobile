@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ProfileContainer extends StatelessWidget {
@@ -61,16 +60,17 @@ class ProfileContainer extends StatelessWidget {
 
 class ProfileContainerTile extends StatelessWidget {
   const ProfileContainerTile(
-      {super.key, this.onTap, required this.text, required this.suffix});
+      {super.key, this.onTap, required this.text, this.suffix});
   final VoidCallback? onTap;
   final String text;
-  final Widget suffix;
+  final Widget? suffix;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: Material(
+        color: Colors.white,
         child: InkWell(
           onTap: onTap,
           child: Container(
@@ -85,18 +85,16 @@ class ProfileContainerTile extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Expanded(
-                  child: Text(
-                    text,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black.withOpacity(.6),
-                      fontWeight: FontWeight.w600,
-                    ),
+                Text(
+                  text,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black.withOpacity(.6),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                suffix,
+                if (suffix != null) ...[const Spacer(), suffix!]
               ],
             ),
           ),

@@ -23,4 +23,5 @@ abstract class KColors {
 
   static Color bisqueColor = const Color(0xFFF2780C).withOpacity(.2);
   static Color blueSea = const Color(0xFF4285F4).withOpacity(.25);
+  static Color grayButton = const Color(0xFFBCC8D8).withOpacity(.4);
 }
