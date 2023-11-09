@@ -20,4 +20,7 @@ abstract class KColors {
     Colors.white,
     Color(0xFFEEEEEE)
   ];
+
+  static Color bisqueColor = const Color(0xFFF2780C).withOpacity(.2);
+  static Color blueSea = const Color(0xFF4285F4).withOpacity(.25);
 }

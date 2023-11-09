@@ -103,9 +103,19 @@ class AuthViewModel extends BaseViewModel {
     return null;
   }
 
-  void setSelectedBlog(BlogModel blog) {
+  void setSelectedBlog(BlogModel? blog) {
     selectedBlog = blog;
     notifyListeners();
+  }
+
+  void setSelectedBlogFromMemory() {
+    final memory = _appSettings.getSelectedBlogId();
+    setSelectedBlog(blogList?.singleWhere((e) => e.id == memory));
+  }
+
+  Future<bool> checkUserBlogAccess() async {
+    await getBlogUserInformation();
+    return blogUserInfoModel?.hasAdminAccess ?? false;
   }
 
   Future<void> getBlogUserInformation() async {

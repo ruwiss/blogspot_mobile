@@ -12,6 +12,7 @@ class HomeViewModel extends BaseViewModel {
   PostFilter currentFilter = PostFilter.posts;
   late String blogId;
   String? searchText;
+  bool isSearch = false;
 
   final _dio = locator<HttpService>();
   PostListModel? postListModel;
@@ -65,11 +66,17 @@ class HomeViewModel extends BaseViewModel {
 
   void setSearchText(String? value) {
     if (value != null && value.trim().isEmpty) value = null;
+    if (value != null) isSearch = true;
     searchText = value;
     notifyListeners();
-    // İlk aramada tümünde araması için filtreyi devre dışı bırakıyoruz.
-    clearOrderFilter();
-    getContents();
+
+    if (isSearch || (!isSearch && value != null)) {
+      // İlk aramada tümünde araması için filtreyi devre dışı bırakıyoruz.
+      clearOrderFilter();
+      getContents();
+    }
+
+    if (value == null && isSearch) isSearch = false;
   }
 
   void setOrder(OtherFilter otherFilter) {
@@ -228,6 +235,7 @@ class HomeViewModel extends BaseViewModel {
       setScrollIndicatorActive(false);
       return false;
     }
+
     final postList = PostListModel.fromJson(response.data);
 
     if (pageToken == null) {

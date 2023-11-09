@@ -25,8 +25,7 @@ class _BlogSelectWidgetState extends State<BlogSelectWidget> {
   String? _touchedBlogId;
 
   void _navigateScreen(String selectedId) async {
-    await widget.model.getBlogUserInformation();
-    if (!widget.model.blogUserInfoModel!.hasAdminAccess) {
+    if (!await  widget.model.checkUserBlogAccess()) {
       widget.onError?.call('limitedBlogError'.tr());
       return;
     }

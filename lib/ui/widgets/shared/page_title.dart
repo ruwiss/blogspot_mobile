@@ -7,39 +7,31 @@ class PageTitle extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(56);
 
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize: preferredSize,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 17),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () => context.pop(),
-              icon: const Icon(
-                Icons.keyboard_arrow_left,
-                color: KColors.dark,
-                size: 35,
-              ),
+        preferredSize: preferredSize,
+        child: AppBar(
+          backgroundColor: KColors.softWhite,
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () => context.pop(),
+            icon: const Icon(
+              Icons.keyboard_arrow_left,
+              color: KColors.dark,
+              size: 35,
             ),
-            const Spacer(),
-            Text(
-              title,
-              style: const TextStyle(
-                color: KColors.dark,
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
+          ),
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: KColors.dark,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
             ),
-            const SizedBox(width: 45),
-            const Spacer(),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

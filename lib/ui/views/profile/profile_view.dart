@@ -1,12 +1,18 @@
+import 'package:blogman/app/base/base_viewmodel.dart';
 import 'package:blogman/app/locator.dart';
-import 'package:blogman/app/router.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
+import 'package:blogman/ui/views/auth/models/blog_model.dart';
+import 'package:blogman/ui/views/profile/profile_viewmodel.dart';
+import 'package:blogman/ui/widgets/profile/profile_container.dart';
+import 'package:blogman/ui/widgets/profile/profile_user_info.dart';
 import 'package:blogman/ui/widgets/shared/page_title.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/images.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -16,119 +22,56 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final _authViewModel = locator<AuthViewModel>();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      locator<ProfileViewModel>().getBlogsIfNotAvailable();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final User user = _authViewModel.user!;
     return Scaffold(
       appBar: PageTitle(title: 'yourProfile'.tr()),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 20),
-            decoration: BoxDecoration(
-              color: KColors.softWhite2,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(.1),
-                  offset: const Offset(0.0, 2.5),
-                  blurRadius: 4,
-                  spreadRadius: 1,
-                )
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    _userImage(user),
-                    _userInfo(user),
+      body: Consumer<AuthViewModel>(
+        builder: (context, model, child) => Column(
+          children: [
+            ProfileUserInfo(user: model.user!),
+            const SizedBox(height: 10),
+            ProfileContainer(
+                title: 'chooseBlog'.tr(),
+                titleBgColor: KColors.bisqueColor,
+                children: [
+                  if (model.blogList == null) ...[
+                    if (model.state == ViewState.busy)
+                      Text('waiting'.tr(), textAlign: TextAlign.center),
+                    if (model.state == ViewState.idle)
+                      Text('unknownError'.tr(), textAlign: TextAlign.center),
                   ],
-                ),
-                _signOutButton()
-              ],
+                  if (model.blogList != null)
+                    ...List.generate(model.blogList!.length, (index) {
+                      final BlogModel blog = model.blogList![index];
+                      return ProfileContainerTile(
+                        onTap: () {
+                          locator<ProfileViewModel>().changeUserBlog(blog);
+                          context.pop();
+                        },
+                        text: blog.name,
+                        suffix: SvgPicture.asset(
+                            model.selectedBlog?.id == blog.id
+                                ? KImages.check
+                                : KImages.checkOutline),
+                      );
+                    }),
+                ]),
+            ProfileContainer(
+              title: 'statistics'.tr(),
+              titleBgColor: KColors.blueSea,
+              children: [],
             ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Material _signOutButton() {
-    bool inProgress = false;
-    return Material(
-      color: Colors.white,
-      child: StatefulBuilder(
-        builder: (context, setState) {
-          return InkWell(
-            onTap: () async {
-              if (inProgress) return;
-              setState(() => inProgress = true);
-              await _authViewModel.signOut();
-              _authViewModel.setBlogList(null);
-              if (mounted) resetApp();
-            },
-            borderRadius: BorderRadius.circular(5),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
-              decoration: BoxDecoration(
-                border: Border.all(color: KColors.lightGray),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Text(
-                inProgress ? 'waiting'.tr() : 'signOut'.tr(),
-                style: TextStyle(
-                  color: Colors.black.withOpacity(.6),
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Column _userInfo(User user) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '${user.displayName}',
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-            color: Colors.black.withOpacity(.6),
-          ),
+          ],
         ),
-        Text(
-          '${user.email}',
-          style: const TextStyle(
-            color: KColors.lightGray,
-            fontSize: 13,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Padding _userImage(User user) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      child: ClipOval(
-        child: user.photoURL != null
-            ? Image.network(
-                user.photoURL!,
-                width: 45,
-                height: 45,
-              )
-            : Image.asset(
-                KImages.avatar,
-                width: 45,
-                height: 45,
-              ),
       ),
     );
   }
