@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../../../app/base/base_view.dart';
 import '../../../utils/colors.dart';
 import '../../widgets/home/post_item.dart';
+import '../../widgets/shared/no_item_widget.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StatelessWidget {
@@ -131,27 +132,7 @@ class HomeView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 11.5),
         child: postList.items.isEmpty
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.calendar_view_day_sharp,
-                    size: 100,
-                    color: KColors.blueGray,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 50),
-                    child: Text(
-                      'noPost'.tr(),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black.withOpacity(.6),
-                      ),
-                    ),
-                  ),
-                ],
-              )
+            ? const NoItemWidget()
             : ListView.builder(
                 controller: _scrollController,
                 itemCount: postList.items.length,

@@ -35,17 +35,21 @@ class ProfileViewModel extends BaseViewModel {
   Future<void> getStatistics() async {
     if (statistics != null) return;
     setState(ViewState.busy);
+
     const types = ['7days', '30days', 'all'];
     Map<String, String> values = {};
+
     for (var type in types) {
       final response = await _dio.request(
           url: KStrings.getStatistics(blogId: locator<HomeViewModel>().blogId),
           method: HttpMethod.get,
           data: {'range': type});
+
       if (response == null) {
         setState(ViewState.idle);
-        break;
+        return;
       }
+
       values[type] = response.data['counts'][0]['count'];
     }
     statistics = StatisticsModel.fromJson(values);

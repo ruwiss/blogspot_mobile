@@ -40,4 +40,11 @@ abstract class KStrings {
 
   static String getStatistics({required String blogId}) =>
       "https://www.googleapis.com/blogger/v3/blogs/$blogId/pageviews";
+
+  static String getComments({required String blogId}) =>
+      "https://www.googleapis.com/blogger/v3/blogs/$blogId/comments";
+
+  static String getPostComments(
+          {required String blogId, required String postId}) =>
+      "https://www.googleapis.com/blogger/v3/blogs/$blogId/posts/$postId/comments";
 }

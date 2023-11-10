@@ -115,7 +115,7 @@ class _ProfileViewState extends State<ProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 35),
       child: InkWell(
-        onTap: () {},
+        onTap: () => context.pushReplacementNamed('comments'),
         borderRadius: BorderRadius.circular(4),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -124,7 +124,7 @@ class _ProfileViewState extends State<ProfileView> {
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
-            'comments'.tr(),
+            'pendingComments'.tr(),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.w700,

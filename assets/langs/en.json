@@ -30,5 +30,10 @@
     "yourProfile": "Your Profile",
     "signOut": "Sign Out",
     "waiting": "Waiting",
-    "comments": "Comments" 
+    "comments": " Comments",
+    "pendingComments": "Pending Comments",
+    "inReplyTo": "In reply to someone",
+    "approve": "Approve",
+    "spam": "Spam",
+    "delete": "Delete"
 }

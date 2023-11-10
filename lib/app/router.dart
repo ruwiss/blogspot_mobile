@@ -1,7 +1,10 @@
 import 'package:blogman/app/locator.dart';
 import 'package:blogman/ui/views/auth/auth_view.dart';
+import 'package:blogman/ui/views/comments/comments_view.dart';
+import 'package:blogman/ui/views/comments/comments_viewmodel.dart';
 import 'package:blogman/ui/views/profile/profile_view.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../ui/views/home/home_view.dart';
 
 final GoRouter router = GoRouter(
@@ -22,6 +25,14 @@ final GoRouter router = GoRouter(
       path: '/profile',
       name: 'profile',
       builder: (context, state) => const ProfileView(),
+    ),
+    GoRoute(
+      path: '/comments',
+      name: 'comments',
+      builder: (context, state) => ChangeNotifierProvider<CommentsViewModel>(
+        create: (context) => CommentsViewModel(),
+        child: CommentsView(postId: state.uri.queryParameters['postId']),
+      ),
     ),
   ],
 );
