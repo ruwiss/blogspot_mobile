@@ -35,5 +35,6 @@
     "inReplyTo": "In reply to someone",
     "approve": "Approve",
     "spam": "Spam",
-    "delete": "Delete"
+    "delete": "Delete",
+    "cancel": "Cancel"
 }

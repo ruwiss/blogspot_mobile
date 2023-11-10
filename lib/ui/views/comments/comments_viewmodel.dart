@@ -10,12 +10,11 @@ class CommentsViewModel extends BaseViewModel {
   CommentsModel? commentsModel;
 
   void getComments(String? postId) async {
-    if (commentsModel != null) return;
     setState(ViewState.busy);
 
     Map<String, dynamic> data = {"view": "ADMIN"};
 
-    if (postId == null) data['status'] = CommentStatus.pending.name;
+    //if (postId == null) data['status'] = CommentStatus.pending.name;
 
     final blogId = locator<HomeViewModel>().blogId;
     final response = await _dio.request(
@@ -43,5 +42,18 @@ class CommentsViewModel extends BaseViewModel {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<void> deleteComment(CommentModel comment) async {
+    final response = await _dio.request(
+        url: KStrings.deleteComment(comment), method: HttpMethod.delete);
+
+    if (response == null) {
+      deleteState(comment.id);
+      return;
+    }
+
+    commentsModel?.items.remove(comment);
+    deleteState(comment.id);
   }
 }

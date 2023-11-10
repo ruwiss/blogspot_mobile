@@ -1,6 +1,7 @@
 import 'package:blogman/app/base/base_viewmodel.dart';
 import 'package:blogman/extensions/string_formatter.dart';
 import 'package:blogman/ui/views/comments/models/comments_model.dart';
+import 'package:blogman/ui/widgets/comments/comment_actions.dart';
 import 'package:blogman/ui/widgets/shared/no_item_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -90,43 +91,10 @@ class _CommentsViewState extends State<CommentsView> {
                   style: const TextStyle(color: KColors.commentTagColor),
                 ),
               const Spacer(),
-              if (comment.status == CommentStatus.pending)
-                _commentActionButton(
-                  onTap: () {},
-                  text: 'approve'.tr(),
-                  color: KColors.greenSea,
-                ),
-              _commentActionButton(
-                onTap: () {},
-                text: 'spam'.tr(),
-                color: KColors.orange,
-              ),
-              _commentActionButton(
-                onTap: () {},
-                text: 'delete'.tr(),
-                color: KColors.blue,
-              )
+              CommentActions(comment: comment),
             ],
           )
         ],
-      ),
-    );
-  }
-
-  TextButton _commentActionButton({
-    required String text,
-    required Color color,
-    Function()? onTap,
-  }) {
-    return TextButton(
-      onPressed: onTap,
-      style: TextButton.styleFrom(padding: const EdgeInsets.only(left: 6)),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: color,
-          fontWeight: FontWeight.w600,
-        ),
       ),
     );
   }

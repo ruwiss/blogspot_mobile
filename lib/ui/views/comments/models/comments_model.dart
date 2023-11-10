@@ -5,7 +5,7 @@ enum CommentStatus { emptied, live, pending, spam, noStatus }
 class CommentsModel {
   CommentsModel({required this.pageToken, required this.items});
   final String? pageToken;
-  final List<CommentModel> items;
+  List<CommentModel> items;
 
   CommentsModel.fromJson(Map<String, dynamic> json)
       : pageToken = json['pageToken'],

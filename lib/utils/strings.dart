@@ -1,4 +1,5 @@
 import 'package:blogman/enums/post_filter_enum.dart';
+import 'package:blogman/ui/views/comments/models/comments_model.dart';
 
 abstract class KStrings {
   static const String appName = 'Blogspot Mobile';
@@ -47,4 +48,16 @@ abstract class KStrings {
   static String getPostComments(
           {required String blogId, required String postId}) =>
       "https://www.googleapis.com/blogger/v3/blogs/$blogId/posts/$postId/comments";
+
+  static String deleteComment(CommentModel comment) =>
+      "https://www.googleapis.com/blogger/v3/blogs/${comment.blogId}/posts/${comment.postId}/comments/${comment.id}";
+  
+  static String spamComment(CommentModel comment) =>
+      "https://www.googleapis.com/blogger/v3/blogs/${comment.blogId}/posts/${comment.postId}/comments/${comment.id}/spam";
+  
+  static String approveComment(CommentModel comment) =>
+      "https://www.googleapis.com/blogger/v3/blogs/${comment.blogId}/posts/${comment.postId}/comments/${comment.id}/approve";
+  
+
+
 }
