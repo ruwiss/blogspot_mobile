@@ -44,6 +44,12 @@ class CommentsViewModel extends BaseViewModel {
     }
   }
 
+  void updateComment(CommentModel oldComment, CommentModel newComment) {
+    final index = commentsModel!.items.indexOf(oldComment);
+    commentsModel!.items.removeAt(index);
+    commentsModel!.items.insert(index, newComment);
+  }
+
   Future<void> deleteComment(CommentModel comment) async {
     final response = await _dio.request(
         url: KStrings.deleteComment(comment), method: HttpMethod.delete);
@@ -53,7 +59,33 @@ class CommentsViewModel extends BaseViewModel {
       return;
     }
 
-    commentsModel?.items.remove(comment);
+    commentsModel!.items.remove(comment);
+    deleteState(comment.id);
+  }
+
+  Future<void> reportSpamComment(CommentModel comment) async {
+    final response = await _dio.request(
+        url: KStrings.spamComment(comment), method: HttpMethod.post);
+
+    if (response == null) {
+      deleteState(comment.id);
+      return;
+    }
+
+    updateComment(comment, comment..status = CommentStatus.spam);
+    deleteState(comment.id);
+  }
+
+  Future<void> approveComment(CommentModel comment) async {
+    final response = await _dio.request(
+        url: KStrings.approveComment(comment), method: HttpMethod.post);
+
+    if (response == null) {
+      deleteState(comment.id);
+      return;
+    }
+
+    updateComment(comment, comment..status = CommentStatus.live);
     deleteState(comment.id);
   }
 }

@@ -19,8 +19,8 @@ class CommentActions extends StatelessWidget {
           ? _commentActionConfirmDialog(
               onConfirm: (type) => switch (type) {
                 (CommentActionTypes.delete) => model.deleteComment(comment),
-                (CommentActionTypes.spam) => {},
-                (CommentActionTypes.approve) => {}
+                (CommentActionTypes.spam) => model.reportSpamComment(comment),
+                (CommentActionTypes.approve) => model.approveComment(comment)
               },
               model: model,
               comment: comment,
@@ -29,22 +29,26 @@ class CommentActions extends StatelessWidget {
               children: [
                 if (comment.status == CommentStatus.pending) ...[
                   _commentActionButton(
-                    onTap: () {},
+                    onTap: () =>
+                        model.addState(comment.id, CommentActionTypes.approve),
                     text: 'approve'.tr(),
                     color: KColors.greenSea,
                   ),
                 ],
-                _commentActionButton(
-                  onTap: () {},
-                  text: 'spam'.tr(),
-                  color: KColors.orange,
-                ),
-                _commentActionButton(
-                  onTap: () =>
-                      model.addState(comment.id, CommentActionTypes.delete),
-                  text: 'delete'.tr(),
-                  color: KColors.blue,
-                )
+                if (comment.status != CommentStatus.spam)
+                  _commentActionButton(
+                    onTap: () =>
+                        model.addState(comment.id, CommentActionTypes.spam),
+                    text: 'spam'.tr(),
+                    color: KColors.orange,
+                  ),
+                if (comment.status != CommentStatus.spam)
+                  _commentActionButton(
+                    onTap: () =>
+                        model.addState(comment.id, CommentActionTypes.delete),
+                    text: 'delete'.tr(),
+                    color: KColors.blue,
+                  )
               ],
             ),
     );

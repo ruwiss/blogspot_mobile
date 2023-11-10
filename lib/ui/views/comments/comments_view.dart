@@ -64,7 +64,12 @@ class _CommentsViewState extends State<CommentsView> {
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.only(top: 17, left: 20, right: 20, bottom: 10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.grey.shade100),
+          borderRadius: BorderRadius.circular(15),
+          color: switch (comment.status) {
+            (CommentStatus.spam) => KColors.red.withOpacity(.1),
+            (CommentStatus.pending) => KColors.commentPending,
+            (_) => Colors.grey.shade100,
+          }),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -29,7 +29,7 @@ class CommentModel {
     required this.author,
   });
   final String id;
-  final CommentStatus? status;
+  CommentStatus? status;
   final DateTime published;
   final DateTime updated;
 

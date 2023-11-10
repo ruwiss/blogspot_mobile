@@ -26,4 +26,6 @@ abstract class KColors {
   static Color grayButton = const Color(0xFFBCC8D8).withOpacity(.4);
   static const Color commentTagColor = Color(0xFF4285F4);
   static const Color greenSea = Color(0xFF00B88C);
+
+  static Color commentPending = const Color(0xFFF2780C).withOpacity(.1);
 }
