@@ -14,7 +14,7 @@ class CommentsViewModel extends BaseViewModel {
 
     Map<String, dynamic> data = {"view": "ADMIN"};
 
-    //if (postId == null) data['status'] = CommentStatus.pending.name;
+    if (postId == null) data['status'] = CommentStatus.pending.name;
 
     final blogId = locator<HomeViewModel>().blogId;
     final response = await _dio.request(

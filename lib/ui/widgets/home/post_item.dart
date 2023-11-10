@@ -6,6 +6,7 @@ import 'package:blogman/utils/images.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../views/home/models/post_model.dart';
 import '../shared/profile_widget.dart';
@@ -18,45 +19,44 @@ class PostItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool commented =
         postModel.replies != null && postModel.replies!.totalItems != '0';
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 23, vertical: 11.5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(4),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.10),
-                offset: const Offset(2, 2),
-                blurRadius: 14,
-                spreadRadius: 4,
-              ),
-            ],
-          ),
-          child: Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 11.5),
+      child: Material(
+        color: Colors.white,
+        elevation: 1,
+        type: MaterialType.card,
+        shadowColor: Colors.black.withOpacity(.7),
+        borderRadius: BorderRadius.circular(4),
+        child: InkWell(
+          onTap: () => context
+              .pushNamed('preview', queryParameters: {"postId": postModel.id}),
+          child: Stack(
             children: [
-              _imageWidget(),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 13, horizontal: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProfileWidget(
-                        authorModel: postModel.author,
-                        date: (postModel.published, postModel.updated)),
-                    const SizedBox(height: 20),
-                    _titleWidget(),
-                    _contentPreviewWidget(commented),
-                  ],
-                ),
-              )
+              Column(
+                children: [
+                  _imageWidget(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 13, horizontal: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ProfileWidget(
+                            authorModel: postModel.author,
+                            date: (postModel.published, postModel.updated)),
+                        const SizedBox(height: 20),
+                        _titleWidget(),
+                        _contentPreviewWidget(commented),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              if (commented) _commentPreviewWidget()
             ],
           ),
         ),
-        if (commented) _commentPreviewWidget()
-      ],
+      ),
     );
   }
 

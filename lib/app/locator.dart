@@ -1,6 +1,7 @@
 import 'package:blogman/services/http_service.dart';
 import 'package:blogman/services/shared_preferences/settings.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
+import 'package:blogman/ui/views/preview/preview_viewmodel.dart';
 import 'package:blogman/ui/views/profile/profile_viewmodel.dart';
 import 'package:blogman/ui/widgets/home/app_bar/app_bar_viewmodel.dart';
 import 'package:get_it/get_it.dart';
@@ -18,6 +19,8 @@ void setupLocator() {
   locator.registerLazySingleton(() => AppBarViewModel());
 
   locator.registerLazySingleton(() => ProfileViewModel());
+
+  locator.registerLazySingleton(() => PreviewViewModel());
 }
 
 void userSignOutResetLocator() {
