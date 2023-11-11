@@ -7,17 +7,18 @@ import '../../utils/colors.dart';
 import '../../utils/images.dart';
 
 class PostImage extends StatelessWidget {
-  const PostImage({super.key, required this.postModel});
-  final PostModel postModel;
+  const PostImage({super.key, this.postModel, this.imageUrl});
+  final PostModel? postModel;
+  final String? imageUrl;
 
   @override
   Widget build(BuildContext context) {
-    final bool scheduled = postModel.status == PostStatus.scheduled;
+    final bool scheduled = postModel?.status == PostStatus.scheduled;
     return Stack(
       alignment: Alignment.center,
       children: [
         AspectRatio(
-          aspectRatio: postModel.image != null
+          aspectRatio: postModel?.image != null || imageUrl != null
               ? 16 / 9
               : scheduled
                   ? 16 / 3
@@ -26,11 +27,14 @@ class PostImage extends StatelessWidget {
             borderRadius: const BorderRadius.vertical(
               top: Radius.circular(4),
             ),
-            child: postModel.image != null
-                ? FadeInImage.assetNetwork(
-                    placeholder: KImages.placeholder,
-                    image: postModel.image!,
-                    fit: BoxFit.cover,
+            child: imageUrl != null || postModel?.image != null
+                ? Hero(
+                    tag: postModel?.image ?? imageUrl!,
+                    child: FadeInImage.assetNetwork(
+                      placeholder: KImages.placeholder,
+                      image: postModel?.image ?? imageUrl!,
+                      fit: BoxFit.cover,
+                    ),
                   )
                 : Container(
                     color: scheduled
@@ -41,8 +45,8 @@ class PostImage extends StatelessWidget {
         ),
 
         // Zamanlanmış postlar için vinyet efekti ve süresi.
-        if (postModel.status != null &&
-            postModel.status == PostStatus.scheduled)
+        if (postModel?.status != null &&
+            postModel?.status == PostStatus.scheduled)
           ..._scheduledView()
       ],
     );
@@ -82,7 +86,7 @@ class PostImage extends StatelessWidget {
               ),
             ),
             Text(
-              postModel.published.formatAsDayMonthYear(),
+              postModel!.published.formatAsDayMonthYear(),
               style: TextStyle(
                 color: Colors.white.withOpacity(.8),
                 fontSize: 15,

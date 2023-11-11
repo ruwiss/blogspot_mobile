@@ -16,8 +16,9 @@ import '../../widgets/profile_widget.dart';
 import 'preview_viewmodel.dart';
 
 class PreviewView extends StatefulWidget {
-  const PreviewView({super.key, required this.contentUrl});
+  const PreviewView({super.key, required this.contentUrl, this.previewImgUrl});
   final String contentUrl;
+  final String? previewImgUrl;
 
   @override
   State<PreviewView> createState() => _PreviewViewState();
@@ -42,83 +43,92 @@ class _PreviewViewState extends State<PreviewView> {
   Widget build(BuildContext context) {
     return Consumer<PreviewViewModel>(
       builder: (context, model, child) => Scaffold(
-        body: model.postModel == null
-            ? const Center(
-                child: CircularProgressIndicator(color: KColors.blue))
-            : CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    backgroundColor: KColors.softWhite2,
-                    leading: IconButton(
-                      onPressed: () => context.pop(),
-                      icon: const Icon(Icons.close, color: KColors.dark),
-                    ),
-                    actions: _appBarActions(),
-                    expandedHeight: 290,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 10, right: 10, top: 60),
-                        child: PostImage(
-                          postModel: model.postModel!,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  // Profile Item
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: ProfileWidget(
-                        authorModel: model.postModel!.author,
-                        date: (
-                          model.postModel!.published,
-                          model.postModel!.updated
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  // content
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 20),
-                      child: Column(
-                        children: [
-                          Text(
-                            model.postModel!.title,
-                            overflow: TextOverflow.fade,
-                            style: TextStyle(
-                              fontSize: 19,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.black.withOpacity(.85),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          SizedBox(
-                            height: !model.contentVisible ? 700 : null,
-                            child: Html(
-                              data: model.postModel!.content,
-                              onLinkTap: (url, attributes, element) {
-                                if (url!.isPicture()) {
-                                  context.previewImage(url);
-                                } else {
-                                  Uri.parse(url).launch(browser: true);
-                                }
-                              },
-                            ),
-                          ),
-                          _actionButtons(model)
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // Action Buttons
-                ],
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: KColors.softWhite2,
+              leading: IconButton(
+                onPressed: () => context.pop(),
+                icon: const Icon(Icons.close, color: KColors.dark),
               ),
+              actions: _appBarActions(),
+              expandedHeight: 290,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
+                  child: PostImage(
+                    postModel: model.postModel,
+                    imageUrl: widget.previewImgUrl, // for hero animation
+                  ),
+                ),
+              ),
+            ),
+
+            if (model.postModel == null)
+              const SliverToBoxAdapter(
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(30),
+                    child: CircularProgressIndicator(color: KColors.blue),
+                  ),
+                ),
+              ),
+
+            if (model.postModel != null) ...[
+              // Profile Item
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: ProfileWidget(
+                    authorModel: model.postModel!.author,
+                    date: (
+                      model.postModel!.published,
+                      model.postModel!.updated
+                    ),
+                  ),
+                ),
+              ),
+
+              // content
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                  child: Column(
+                    children: [
+                      Text(
+                        model.postModel!.title,
+                        overflow: TextOverflow.fade,
+                        style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black.withOpacity(.85),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SizedBox(
+                        height: !model.contentVisible ? 700 : null,
+                        child: Html(
+                          data: model.postModel!.content,
+                          onLinkTap: (url, attributes, element) {
+                            if (url!.isPicture()) {
+                              context.previewImage(url);
+                            } else {
+                              Uri.parse(url).launch(browser: true);
+                            }
+                          },
+                        ),
+                      ),
+                      _actionButtons(model)
+                    ],
+                  ),
+                ),
+              ),
+            ]
+
+            // Action Buttons
+          ],
+        ),
       ),
     );
   }

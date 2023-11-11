@@ -44,11 +44,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/preview',
       name: 'preview',
-      builder: (context, state) => ChangeNotifierProvider<PreviewViewModel>(
+      builder: (context, state) {
+        final params = state.uri.queryParameters;
+        return ChangeNotifierProvider<PreviewViewModel>(
         create: (context) => PreviewViewModel(),
         child:
-            PreviewView(contentUrl: state.uri.queryParameters['contentUrl']!),
-      ),
+            PreviewView(contentUrl: params['contentUrl']!, previewImgUrl: params['previewImgUrl']),
+      );
+      },
     ),
   ],
 );

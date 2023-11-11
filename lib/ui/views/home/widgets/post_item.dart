@@ -9,7 +9,6 @@ import '../../../../models/post_model.dart';
 import '../../../widgets/profile_widget.dart';
 import '../../../widgets/post_image.dart';
 
-
 class PostItem extends StatelessWidget {
   const PostItem({super.key, required this.postModel});
   final PostModel postModel;
@@ -27,8 +26,10 @@ class PostItem extends StatelessWidget {
         shadowColor: Colors.black.withOpacity(.7),
         borderRadius: BorderRadius.circular(4),
         child: InkWell(
-          onTap: () => context.pushNamed('preview',
-              queryParameters: {'contentUrl': postModel.selfLink}),
+          onTap: () => context.pushNamed('preview', queryParameters: {
+            'contentUrl': postModel.selfLink,
+            'previewImgUrl': postModel.image
+          }),
           child: Stack(
             children: [
               Column(
