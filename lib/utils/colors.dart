@@ -13,6 +13,8 @@ abstract class KColors {
   static const Color antiqueWhite = Color(0xFFFAEBD7);
   static const Color whiteSmoke = Color(0xFFF5F5F5);
 
+  static const Color darkBgColor = Color(0xFF131516);
+
   static const List<Color> homeLinearGradient = [
     Color(0xFFEEEEEE),
     Colors.white,

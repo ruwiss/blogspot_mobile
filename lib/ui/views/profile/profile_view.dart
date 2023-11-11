@@ -36,11 +36,6 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
       appBar: PageTitle(
         title: 'yourProfile'.tr(),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.dark_mode_outlined, color: KColors.dark))
-        ],
       ),
       body: Consumer<AuthViewModel>(
         builder: (context, model, child) => SingleChildScrollView(

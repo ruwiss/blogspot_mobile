@@ -36,7 +36,7 @@ class Main extends StatelessWidget {
         ChangeNotifierProvider<AuthViewModel>(
             create: (context) => locator<AuthViewModel>()),
         ChangeNotifierProvider<ProfileViewModel>(
-            create: (context) => locator<ProfileViewModel>())
+            create: (context) => locator<ProfileViewModel>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

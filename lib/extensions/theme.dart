@@ -2,7 +2,7 @@ import 'package:blogman/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 extension ThemeDataExtension on BuildContext {
-  ThemeData themeData() => Theme.of(this).copyWith(
+  ThemeData themeData() => ThemeData.light().copyWith(
         useMaterial3: true,
         textTheme: ThemeData.light().textTheme.apply(fontFamily: "Nunito Sans"),
         primaryTextTheme:
