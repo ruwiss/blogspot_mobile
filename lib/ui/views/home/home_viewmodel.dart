@@ -168,6 +168,7 @@ class HomeViewModel extends BaseViewModel {
     if (pageToken == null) {
       postListModel = postList;
     } else {
+      postListModel?.nextPageToken = postList.nextPageToken;
       postListModel?.items.addAll(postList.items);
     }
 
@@ -206,6 +207,7 @@ class HomeViewModel extends BaseViewModel {
       postListModel = pageModel;
       postListModel?.items.addAll(postModel.items);
     } else {
+      postListModel?.nextPageToken = pageModel.nextPageToken;
       postListModel?.items.addAll(pageModel.items);
       postListModel?.items.addAll(postModel.items);
     }
@@ -241,6 +243,7 @@ class HomeViewModel extends BaseViewModel {
     if (pageToken == null) {
       postListModel = postList;
     } else {
+      postListModel?.nextPageToken = postList.nextPageToken;
       postListModel?.items.addAll(postList.items);
     }
 

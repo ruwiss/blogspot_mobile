@@ -20,11 +20,20 @@ class CommentsView extends StatefulWidget {
 }
 
 class _CommentsViewState extends State<CommentsView> {
+  final _scrollController = ScrollController();
+
+  void _scrollListener() {
+    if (_scrollController.position.extentAfter < 500) {
+      Provider.of<CommentsViewModel>(context, listen: false).loadMoreComments();
+    }
+  }
+
   @override
   void initState() {
+    _scrollController.addListener(() => _scrollListener());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CommentsViewModel>(context, listen: false)
-          .getComments(widget.postId);
+          .getComments(postId: widget.postId);
     });
     super.initState();
   }
@@ -46,11 +55,19 @@ class _CommentsViewState extends State<CommentsView> {
                       model.commentsModel!.items.isEmpty
                   ? const NoItemWidget()
                   : ListView.builder(
+                      controller: _scrollController,
                       itemCount: model.commentsModel!.items.length,
                       itemBuilder: (context, index) {
                         final CommentModel comment =
                             model.commentsModel!.items[index];
-                        return _commentWidget(comment, model);
+                        return Column(
+                          children: [
+                            _commentWidget(comment, model),
+                            if (model.isActiveState('loadMore') &&
+                                index == model.commentsModel!.items.length - 1)
+                              const LinearProgressIndicator()
+                          ],
+                        );
                       },
                     ),
         ),

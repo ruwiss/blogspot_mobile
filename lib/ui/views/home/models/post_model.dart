@@ -5,7 +5,7 @@ import '../../../../models/author_model.dart';
 class PostListModel {
   PostListModel({this.nextPageToken, required this.items});
 
-  final String? nextPageToken;
+  String? nextPageToken;
   final List<PostModel> items;
 
   factory PostListModel.fromJson(Map<String, dynamic> json) {

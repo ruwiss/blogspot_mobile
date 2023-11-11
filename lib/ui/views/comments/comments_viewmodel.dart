@@ -8,13 +8,15 @@ import '../../../app/base/base_viewmodel.dart';
 class CommentsViewModel extends BaseViewModel {
   final _dio = locator<HttpService>();
   CommentsModel? commentsModel;
+  String? _commentToken;
 
-  void getComments(String? postId) async {
-    setState(ViewState.busy);
+  Future<void> getComments({String? postId, bool isLoadMore = false}) async {
+    if (!isLoadMore) setState(ViewState.busy);
 
     Map<String, dynamic> data = {"view": "ADMIN"};
+    if (isLoadMore) data['pageToken'] = _commentToken;
 
-    if (postId == null) data['status'] = CommentStatus.pending.name;
+    //if (postId == null) data['status'] = CommentStatus.pending.name;
 
     final blogId = locator<HomeViewModel>().blogId;
     final response = await _dio.request(
@@ -26,12 +28,30 @@ class CommentsViewModel extends BaseViewModel {
     );
 
     if (response == null) {
-      setState(ViewState.idle);
+      if (!isLoadMore) setState(ViewState.idle);
       return;
     }
 
-    commentsModel = CommentsModel.fromJson(response.data);
-    setState(ViewState.idle);
+    if (isLoadMore) {
+      final newModel = CommentsModel.fromJson(response.data);
+      commentsModel!.items.addAll(newModel.items);
+      commentsModel!.pageToken = newModel.pageToken;
+    } else {
+      commentsModel = CommentsModel.fromJson(response.data);
+    }
+    if (!isLoadMore) setState(ViewState.idle);
+  }
+
+  void loadMoreComments() async {
+    const state = 'loadMore';
+    if (commentsModel!.pageToken == null ||
+        commentsModel!.pageToken == _commentToken ||
+        isActiveState(state)) return;
+    _commentToken = commentsModel!.pageToken;
+
+    addState(state);
+    await getComments(isLoadMore: true);
+    deleteState(state);
   }
 
   CommentModel? findCommentFromId(String? id) {
