@@ -1,14 +1,12 @@
-import 'package:blogman/enums/post_filter_enum.dart';
-import 'package:blogman/extensions/datetime_formatter.dart';
 import 'package:blogman/extensions/string_formatter.dart';
+import 'package:blogman/ui/widgets/home/post_image.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/images.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../views/home/models/post_model.dart';
+import '../../../models/post_model.dart';
 import '../shared/profile_widget.dart';
 
 class PostItem extends StatelessWidget {
@@ -28,13 +26,13 @@ class PostItem extends StatelessWidget {
         shadowColor: Colors.black.withOpacity(.7),
         borderRadius: BorderRadius.circular(4),
         child: InkWell(
-          onTap: () => context
-              .pushNamed('preview', queryParameters: {"postId": postModel.id}),
+          onTap: () => context.pushNamed('preview',
+              queryParameters: {'contentUrl': postModel.selfLink}),
           child: Stack(
             children: [
               Column(
                 children: [
-                  _imageWidget(),
+                  PostImage(postModel: postModel),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 13, horizontal: 12),
@@ -62,8 +60,8 @@ class PostItem extends StatelessWidget {
 
   Positioned _commentPreviewWidget() {
     return Positioned(
-      bottom: 19,
-      right: 35,
+      bottom: 8,
+      right: 16,
       child: Row(
         children: [
           SvgPicture.asset(KImages.comment),
@@ -105,84 +103,6 @@ class PostItem extends StatelessWidget {
         fontWeight: FontWeight.w800,
         color: Colors.black.withOpacity(.85),
       ),
-    );
-  }
-
-  Widget _imageWidget() {
-    bool scheduled = postModel.status == PostStatus.scheduled;
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        AspectRatio(
-          aspectRatio: postModel.image != null
-              ? 16 / 9
-              : scheduled
-                  ? 16 / 3
-                  : 16 / .2,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(4),
-            ),
-            child: postModel.image != null
-                ? FadeInImage.assetNetwork(
-                    placeholder: KImages.placeholder,
-                    image: postModel.image!,
-                    fit: BoxFit.cover,
-                  )
-                : Container(
-                    color: scheduled
-                        ? Colors.black.withOpacity(.2)
-                        : KColors.blueGray.withOpacity(.8),
-                  ),
-          ),
-        ),
-
-        // Zamanlanmış postlar için vinyet efekti ve süresi.
-        if (postModel.status != null &&
-            postModel.status == PostStatus.scheduled) ...[
-          Positioned(
-            top: -100,
-            bottom: -100,
-            left: -100,
-            right: -100,
-            child: Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape
-                    .circle, // İsterseniz bu şekli istediğiniz gibi değiştirebilirsiniz
-                gradient: RadialGradient(
-                  center: Alignment
-                      .center, // Gradientin merkezi (burada container'ın merkezi)
-                  radius: 1, // Gradientin dışarı doğru yayılma oranı
-                  colors: [
-                    Colors.black26,
-                    Colors.black87,
-                    Colors.black,
-                  ], // Gradientin renkleri
-                ),
-              ),
-            ),
-          ),
-          Column(
-            children: [
-              Text(
-                'scheduled'.tr().toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 20,
-                ),
-              ),
-              Text(
-                postModel.published.formatAsDayMonthYear(),
-                style: TextStyle(
-                  color: Colors.white.withOpacity(.8),
-                  fontSize: 15,
-                ),
-              )
-            ],
-          )
-        ]
-      ],
     );
   }
 }

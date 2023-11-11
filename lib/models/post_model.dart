@@ -1,6 +1,6 @@
 import 'package:blogman/enums/post_filter_enum.dart';
 
-import '../../../../models/author_model.dart';
+import 'author_model.dart';
 
 class PostListModel {
   PostListModel({this.nextPageToken, required this.items});
@@ -20,6 +20,7 @@ class PostListModel {
 
 class PostModel {
   PostModel({
+    required this.blogId,
     required this.id,
     required this.published,
     required this.updated,
@@ -35,6 +36,7 @@ class PostModel {
   });
 
   final String id;
+  final String blogId;
   final DateTime published;
   final DateTime updated;
   final String url;
@@ -50,6 +52,7 @@ class PostModel {
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
       id: json['id'] as String,
+      blogId: json['blog']['id'],
       published: DateTime.parse(json['published']),
       updated: DateTime.parse(json['updated']),
       url: json['url'] as String,
@@ -76,6 +79,7 @@ class PostModel {
 
   Map<String, dynamic> toJson() => {
         'id': id,
+        'blog': {'id': blogId},
         'published': published.toIso8601String(),
         'updated': updated.toIso8601String(),
         'url': url,

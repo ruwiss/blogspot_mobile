@@ -6,14 +6,10 @@ class ProfileContainer extends StatelessWidget {
     required this.title,
     required this.titleBgColor,
     required this.children,
-    this.width,
-    this.height,
   });
   final List<Widget> children;
   final String title;
   final Color titleBgColor;
-  final double? width;
-  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +39,9 @@ class ProfileContainer extends StatelessWidget {
           Container(
             color: Colors.grey.withOpacity(.04),
             padding: const EdgeInsets.all(12),
-            width: width,
-            height: height,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: children,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: children,
             ),
           )
         ],

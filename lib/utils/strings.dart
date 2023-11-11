@@ -51,13 +51,10 @@ abstract class KStrings {
 
   static String deleteComment(CommentModel comment) =>
       "https://www.googleapis.com/blogger/v3/blogs/${comment.blogId}/posts/${comment.postId}/comments/${comment.id}";
-  
+
   static String spamComment(CommentModel comment) =>
       "https://www.googleapis.com/blogger/v3/blogs/${comment.blogId}/posts/${comment.postId}/comments/${comment.id}/spam";
-  
+
   static String approveComment(CommentModel comment) =>
       "https://www.googleapis.com/blogger/v3/blogs/${comment.blogId}/posts/${comment.postId}/comments/${comment.id}/approve";
-  
-
-
 }

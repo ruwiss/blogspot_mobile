@@ -10,19 +10,21 @@ class CommentsViewModel extends BaseViewModel {
   CommentsModel? commentsModel;
   String? _commentToken;
 
-  Future<void> getComments({String? postId, bool isLoadMore = false}) async {
+  Future<void> getComments(
+      {String? commentUrl,
+      bool isPending = false,
+      bool isLoadMore = false}) async {
     if (!isLoadMore) setState(ViewState.busy);
 
     Map<String, dynamic> data = {"view": "ADMIN"};
     if (isLoadMore) data['pageToken'] = _commentToken;
 
-    //if (postId == null) data['status'] = CommentStatus.pending.name;
+    if (isPending) data['status'] = CommentStatus.pending.name;
 
-    final blogId = locator<HomeViewModel>().blogId;
     final response = await _dio.request(
-      url: postId == null
-          ? KStrings.getComments(blogId: blogId)
-          : KStrings.getPostComments(blogId: blogId, postId: postId),
+      url: isPending
+          ? KStrings.getComments(blogId: locator<HomeViewModel>().blogId)
+          : commentUrl!,
       method: HttpMethod.get,
       data: data,
     );
@@ -42,7 +44,7 @@ class CommentsViewModel extends BaseViewModel {
     if (!isLoadMore) setState(ViewState.idle);
   }
 
-  void loadMoreComments() async {
+  void loadMoreComments(String? commentUrl) async {
     const state = 'loadMore';
     if (commentsModel!.pageToken == null ||
         commentsModel!.pageToken == _commentToken ||
@@ -50,7 +52,7 @@ class CommentsViewModel extends BaseViewModel {
     _commentToken = commentsModel!.pageToken;
 
     addState(state);
-    await getComments(isLoadMore: true);
+    await getComments(commentUrl: commentUrl, isLoadMore: true);
     deleteState(state);
   }
 

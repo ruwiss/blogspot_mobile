@@ -3,6 +3,7 @@ import 'package:blogman/ui/views/auth/auth_view.dart';
 import 'package:blogman/ui/views/comments/comments_view.dart';
 import 'package:blogman/ui/views/comments/comments_viewmodel.dart';
 import 'package:blogman/ui/views/preview/preview_view.dart';
+import 'package:blogman/ui/views/preview/preview_viewmodel.dart';
 import 'package:blogman/ui/views/profile/profile_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -30,16 +31,24 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/comments',
       name: 'comments',
-      builder: (context, state) => ChangeNotifierProvider<CommentsViewModel>(
-        create: (context) => CommentsViewModel(),
-        child: CommentsView(postId: state.uri.queryParameters['postId']),
-      ),
+      builder: (context, state) {
+        final params = state.uri.queryParameters;
+        return ChangeNotifierProvider<CommentsViewModel>(
+          create: (context) => CommentsViewModel(),
+          child: CommentsView(
+              commentUrl: params['commentUrl'],
+              isPending: params['isPending'] == 'true'),
+        );
+      },
     ),
     GoRoute(
       path: '/preview',
       name: 'preview',
-      builder: (context, state) =>
-          PreviewView(postId: state.uri.queryParameters['postId']!),
+      builder: (context, state) => ChangeNotifierProvider<PreviewViewModel>(
+        create: (context) => PreviewViewModel(),
+        child:
+            PreviewView(contentUrl: state.uri.queryParameters['contentUrl']!),
+      ),
     ),
   ],
 );

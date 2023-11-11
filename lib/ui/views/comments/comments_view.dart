@@ -12,8 +12,9 @@ import '../../widgets/shared/profile_widget.dart';
 import 'comments_viewmodel.dart';
 
 class CommentsView extends StatefulWidget {
-  const CommentsView({super.key, this.postId});
-  final String? postId;
+  const CommentsView({super.key, this.commentUrl, this.isPending = false});
+  final String? commentUrl;
+  final bool isPending;
 
   @override
   State<CommentsView> createState() => _CommentsViewState();
@@ -24,7 +25,8 @@ class _CommentsViewState extends State<CommentsView> {
 
   void _scrollListener() {
     if (_scrollController.position.extentAfter < 500) {
-      Provider.of<CommentsViewModel>(context, listen: false).loadMoreComments();
+      Provider.of<CommentsViewModel>(context, listen: false)
+          .loadMoreComments(widget.commentUrl);
     }
   }
 
@@ -32,8 +34,8 @@ class _CommentsViewState extends State<CommentsView> {
   void initState() {
     _scrollController.addListener(() => _scrollListener());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<CommentsViewModel>(context, listen: false)
-          .getComments(postId: widget.postId);
+      Provider.of<CommentsViewModel>(context, listen: false).getComments(
+          commentUrl: widget.commentUrl, isPending: widget.isPending);
     });
     super.initState();
   }
@@ -43,11 +45,9 @@ class _CommentsViewState extends State<CommentsView> {
     return Consumer<CommentsViewModel>(
       builder: (context, model, child) => Scaffold(
         appBar: PageTitle(
-            title: widget.postId == null
-                ? 'pendingComments'.tr()
-                : 'comments'.tr()),
+            title: widget.isPending ? 'pendingComments'.tr() : 'comments'.tr()),
         body: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           alignment: Alignment.topCenter,
           child: model.commentsModel == null && model.state == ViewState.busy
               ? const CircularProgressIndicator(color: KColors.blue)

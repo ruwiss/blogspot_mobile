@@ -15,4 +15,11 @@ extension StringFormatter on String {
   String formatHtml() {
     return replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), '');
   }
+
+  bool isPicture() {
+    return RegExp(
+            r'(https:\/\/)([^\s(["<,>/]*)(\/)[^\s[",><]*(.png|.jpg|.gif|.webp|.avif|.svg)(\?[^\s[",><]*)?')
+        .hasMatch(this);
+  }
+
 }

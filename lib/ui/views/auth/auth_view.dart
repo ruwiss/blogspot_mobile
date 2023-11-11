@@ -121,7 +121,8 @@ class _AuthViewState extends State<AuthView> {
           ),
           bgColor: KColors.orange,
           text: 'createBlog'.tr(),
-          onTap: () => Uri.parse(KStrings.createBlogUrl).launch(browser: true),
+          onTap: () =>
+              Uri.parse(KStrings.createBlogUrl).launch(appBrowser: true),
         ),
         const Spacer(),
         _privacyPolicy()

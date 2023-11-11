@@ -1,7 +1,7 @@
 import 'package:blogman/app/base/base_viewmodel.dart';
 import 'package:blogman/app/locator.dart';
 import 'package:blogman/extensions/notifier.dart';
-import 'package:blogman/ui/views/home/models/post_model.dart';
+import 'package:blogman/models/post_model.dart';
 import 'package:blogman/ui/widgets/home/app_bar/app_bar.dart';
 import 'package:blogman/ui/widgets/home/app_bar/app_bar_viewmodel.dart';
 import 'package:blogman/ui/widgets/home/post_filter.dart';
@@ -130,7 +130,7 @@ class HomeView extends StatelessWidget {
   Widget _postBody({required PostListModel postList}) {
     return _bodyView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 11.5),
+        padding: const EdgeInsets.only(top: 11.5),
         child: postList.items.isEmpty
             ? const NoItemWidget()
             : ListView.builder(
