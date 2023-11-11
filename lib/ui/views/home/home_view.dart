@@ -14,10 +14,15 @@ import 'widgets/app_bar/app_bar_viewmodel.dart';
 import 'widgets/post_filter.dart';
 import 'widgets/post_item.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   HomeView({super.key, required this.blogId});
   final String blogId;
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   final _scrollController = ScrollController();
 
   Future<bool> _willPopScope(HomeViewModel model) async {
@@ -44,14 +49,20 @@ class HomeView extends StatelessWidget {
   void _initState(BuildContext context, HomeViewModel model) async {
     _scrollController.addListener(() => _scrollListener(model));
     // Blog postlarını getir, hata olursa göster.
-    model.setBlogId(blogId);
+    model.setBlogId(widget.blogId);
     if (!await model.getContents() && context.mounted) context.showError();
+  }
+
+  void _dispose(HomeViewModel model) {
+    _scrollController.removeListener(() => _scrollListener(model));
+    _scrollController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(
       onModelReady: (model) => _initState(context, model),
+      dispose: _dispose,
       builder: (context, model, child) {
         final PostListModel? postList = model.postListModel;
         return WillPopScope(
