@@ -2,10 +2,9 @@ import 'package:blogman/extensions/datetime_formatter.dart';
 import 'package:blogman/models/post_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-import '../../../enums/post_filter_enum.dart';
-import '../../../utils/colors.dart';
-import '../../../utils/images.dart';
+import '../../enums/post_filter_enum.dart';
+import '../../utils/colors.dart';
+import '../../utils/images.dart';
 
 class PostImage extends StatelessWidget {
   const PostImage({super.key, required this.postModel});

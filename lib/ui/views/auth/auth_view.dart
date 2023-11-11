@@ -2,8 +2,6 @@ import 'package:blogman/app/base/base_viewmodel.dart';
 import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/extensions/url_launcher.dart';
 import 'package:blogman/services/shared_preferences/settings.dart';
-import 'package:blogman/ui/widgets/auth/auth_button.dart';
-import 'package:blogman/ui/widgets/auth/blog_select_widget.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/images.dart';
 import 'package:blogman/utils/strings.dart';
@@ -15,6 +13,8 @@ import 'package:provider/provider.dart';
 
 import '../../../app/locator.dart';
 import 'auth_viewmodel.dart';
+import 'widgets/auth_button.dart';
+import 'widgets/blog_select_widget.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({super.key});

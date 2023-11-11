@@ -1,13 +1,14 @@
 import 'package:blogman/extensions/string_formatter.dart';
-import 'package:blogman/ui/widgets/home/post_image.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../models/post_model.dart';
-import '../shared/profile_widget.dart';
+import '../../../../models/post_model.dart';
+import '../../../widgets/profile_widget.dart';
+import '../../../widgets/post_image.dart';
+
 
 class PostItem extends StatelessWidget {
   const PostItem({super.key, required this.postModel});

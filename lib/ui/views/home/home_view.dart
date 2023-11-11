@@ -2,17 +2,17 @@ import 'package:blogman/app/base/base_viewmodel.dart';
 import 'package:blogman/app/locator.dart';
 import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/models/post_model.dart';
-import 'package:blogman/ui/widgets/home/app_bar/app_bar.dart';
-import 'package:blogman/ui/widgets/home/app_bar/app_bar_viewmodel.dart';
-import 'package:blogman/ui/widgets/home/post_filter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/base/base_view.dart';
 import '../../../utils/colors.dart';
-import '../../widgets/home/post_item.dart';
-import '../../widgets/shared/no_item_widget.dart';
+import '../../widgets/no_item_widget.dart';
 import 'home_viewmodel.dart';
+import 'widgets/app_bar/app_bar.dart';
+import 'widgets/app_bar/app_bar_viewmodel.dart';
+import 'widgets/post_filter.dart';
+import 'widgets/post_item.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key, required this.blogId});

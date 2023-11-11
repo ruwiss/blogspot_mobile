@@ -1,7 +1,6 @@
 import 'package:blogman/app/locator.dart';
 import 'package:blogman/extensions/theme.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
-import 'package:blogman/ui/widgets/home/app_bar/app_bar_viewmodel.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/strings.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../utils/images.dart';
+import '../../../../../utils/images.dart';
+import 'app_bar_viewmodel.dart';
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});

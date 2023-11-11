@@ -1,11 +1,10 @@
-import 'package:blogman/ui/widgets/home/app_bar/app_bar_viewmodel.dart';
-
 import '../../../app/base/base_viewmodel.dart';
 import '../../../app/locator.dart';
 import '../../../enums/post_filter_enum.dart';
 import '../../../models/post_model.dart';
 import '../../../services/http_service.dart';
 import '../../../utils/strings.dart';
+import 'widgets/app_bar/app_bar_viewmodel.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _appBarViewModel = locator<AppBarViewModel>();

@@ -3,9 +3,6 @@ import 'package:blogman/app/locator.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:blogman/ui/views/auth/models/blog_model.dart';
 import 'package:blogman/ui/views/profile/profile_viewmodel.dart';
-import 'package:blogman/ui/widgets/profile/profile_container.dart';
-import 'package:blogman/ui/widgets/profile/profile_user_info.dart';
-import 'package:blogman/ui/widgets/shared/page_title.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/images.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -13,6 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import '../../widgets/page_title.dart';
+import 'widgets/profile_container.dart';
+import 'widgets/profile_user_info.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -33,7 +34,14 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PageTitle(title: 'yourProfile'.tr()),
+      appBar: PageTitle(
+        title: 'yourProfile'.tr(),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.dark_mode_outlined, color: KColors.dark))
+        ],
+      ),
       body: Consumer<AuthViewModel>(
         builder: (context, model, child) => SingleChildScrollView(
           child: Column(

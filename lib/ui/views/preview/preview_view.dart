@@ -3,8 +3,6 @@ import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/extensions/string_formatter.dart';
 import 'package:blogman/extensions/url_launcher.dart';
 import 'package:blogman/models/post_model.dart';
-import 'package:blogman/ui/widgets/home/post_image.dart';
-import 'package:blogman/ui/widgets/shared/profile_widget.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/images.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -13,6 +11,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/post_image.dart';
+import '../../widgets/profile_widget.dart';
 import 'preview_viewmodel.dart';
 
 class PreviewView extends StatefulWidget {
