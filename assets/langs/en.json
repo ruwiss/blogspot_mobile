@@ -41,5 +41,8 @@
     "showMore": "Show More",
     "enterPostTitle": "Enter a post title",
     "enterPageTitle": "Enter a page title",
-    "enterTitle": "Enter a title"
+    "enterTitle": "Enter a title",
+    "startWriting": "Start writing something for your blog 😊",
+    "length": "Length",
+    "imgUrl": "Image URL"
 }

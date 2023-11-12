@@ -55,7 +55,11 @@ class _PreviewViewState extends State<PreviewView> {
                     icon: const Icon(Icons.close, color: KColors.dark),
                   ),
                   actions: _appBarActions(model.postModel),
-                  expandedHeight: model.postModel?.image == null ? 80 : 290,
+                  expandedHeight: (widget.previewImgUrl == null ||
+                              !widget.previewImgUrl.toString().isPicture()) &&
+                          model.postModel?.image == null
+                      ? 80
+                      : 290,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Padding(
                       padding:

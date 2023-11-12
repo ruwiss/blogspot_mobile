@@ -28,7 +28,7 @@ class _EditorAppBarState extends State<EditorAppBar> {
     return PreferredSize(
       preferredSize: widget.preferredSize,
       child: AppBar(
-        backgroundColor: KColors.softWhite,
+        backgroundColor: KColors.antiqueWhite,
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(
@@ -52,7 +52,9 @@ class _EditorAppBarState extends State<EditorAppBar> {
           IconButton(
             onPressed: () {
               if (!_showInput) {
+                _tTitle.text = widget.title;
                 _setInputVisibility(true);
+                _tTitleFocus.requestFocus();
               } else {
                 _setInputVisibility(false);
               }
@@ -74,11 +76,9 @@ class _EditorAppBarState extends State<EditorAppBar> {
   }
 
   Widget _inputFieldWidget() {
-    final textStyle = TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w700,
-      color: Colors.black.withOpacity(.7),
-    );
+    const textStyle = TextStyle(
+        fontSize: 18, fontWeight: FontWeight.w700, color: KColors.dark);
+
     const inputBorder = UnderlineInputBorder(
       borderSide: BorderSide(color: KColors.blueGray),
     );
@@ -92,17 +92,14 @@ class _EditorAppBarState extends State<EditorAppBar> {
           cursorColor: KColors.blue,
           decoration: InputDecoration(
             hintText: 'enterTitle'.tr(),
-            hintStyle: textStyle.copyWith(color: KColors.blueGray),
+            hintStyle: textStyle.copyWith(color: Colors.black38),
             isDense: true,
             enabledBorder: inputBorder,
             focusedBorder: inputBorder,
           ),
         ),
         InkWell(
-          onTap: () {
-            _setInputVisibility(false);
-            _tTitle.clear();
-          },
+          onTap: () => _tTitle.clear(),
           child: const Icon(
             Icons.close,
             size: 18,
