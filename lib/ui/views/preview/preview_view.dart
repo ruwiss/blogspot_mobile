@@ -42,92 +42,98 @@ class _PreviewViewState extends State<PreviewView> {
   @override
   Widget build(BuildContext context) {
     return Consumer<PreviewViewModel>(
-      builder: (context, model, child) => Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: KColors.softWhite2,
-              leading: IconButton(
-                onPressed: () => context.pop(),
-                icon: const Icon(Icons.close, color: KColors.dark),
-              ),
-              actions: _appBarActions(),
-              expandedHeight: 290,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
-                  child: PostImage(
-                    postModel: model.postModel,
-                    imageUrl: widget.previewImgUrl, // for hero animation
+      builder: (context, model, child) => Container(
+        color: KColors.softWhite2,
+        child: SafeArea(
+          child: Scaffold(
+            body: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: KColors.softWhite2,
+                  leading: IconButton(
+                    onPressed: () => context.pop(),
+                    icon: const Icon(Icons.close, color: KColors.dark),
                   ),
-                ),
-              ),
-            ),
-
-            if (model.postModel == null)
-              const SliverToBoxAdapter(
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(30),
-                    child: CircularProgressIndicator(color: KColors.blue),
-                  ),
-                ),
-              ),
-
-            if (model.postModel != null) ...[
-              // Profile Item
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: ProfileWidget(
-                    authorModel: model.postModel!.author,
-                    date: (
-                      model.postModel!.published,
-                      model.postModel!.updated
+                  actions: _appBarActions(model.postModel),
+                  expandedHeight: model.postModel?.image == null ? 80 : 290,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 10, right: 10, top: 60),
+                      child: PostImage(
+                        postModel: model.postModel,
+                        imageUrl: widget.previewImgUrl, // for hero animation
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              // content
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                  child: Column(
-                    children: [
-                      Text(
-                        model.postModel!.title,
-                        overflow: TextOverflow.fade,
-                        style: TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.black.withOpacity(.85),
-                        ),
+                if (model.postModel == null)
+                  const SliverToBoxAdapter(
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(30),
+                        child: CircularProgressIndicator(color: KColors.blue),
                       ),
-                      const SizedBox(height: 5),
-                      SizedBox(
-                        height: !model.contentVisible ? 700 : null,
-                        child: Html(
-                          data: model.postModel!.content,
-                          onLinkTap: (url, attributes, element) {
-                            if (url!.isPicture()) {
-                              context.previewImage(url);
-                            } else {
-                              Uri.parse(url).launch(browser: true);
-                            }
-                          },
-                        ),
-                      ),
-                      _actionButtons(model)
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ]
 
-            // Action Buttons
-          ],
+                if (model.postModel != null) ...[
+                  // Profile Item
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: ProfileWidget(
+                        authorModel: model.postModel!.author,
+                        date: (
+                          model.postModel!.published,
+                          model.postModel!.updated
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // content
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 20),
+                      child: Column(
+                        children: [
+                          Text(
+                            model.postModel!.title,
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(
+                              fontSize: 19,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black.withOpacity(.85),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          SizedBox(
+                            height: !model.contentVisible ? 700 : null,
+                            child: Html(
+                              data: model.postModel!.content,
+                              onLinkTap: (url, attributes, element) {
+                                if (url!.isPicture()) {
+                                  context.previewImage(url);
+                                } else {
+                                  Uri.parse(url).launch(browser: true);
+                                }
+                              },
+                            ),
+                          ),
+                          _actionButtons(model)
+                        ],
+                      ),
+                    ),
+                  ),
+                ]
+
+                // Action Buttons
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -164,7 +170,7 @@ class _PreviewViewState extends State<PreviewView> {
                   ],
                 ),
               ),
-        if (!model.contentVisible)
+        if (!model.contentVisible && model.postModel!.content.length > 1000)
           TextButton(
             onPressed: () => model.setContentVisible(),
             child: Text(
@@ -178,7 +184,7 @@ class _PreviewViewState extends State<PreviewView> {
     );
   }
 
-  List<Widget> _appBarActions() {
+  List<Widget> _appBarActions(PostModel? postModel) {
     Widget divider() => const SizedBox(
           height: 15,
           child: VerticalDivider(color: KColors.blueGray, width: 15),
@@ -194,12 +200,19 @@ class _PreviewViewState extends State<PreviewView> {
         child: const Icon(Icons.remove_red_eye, color: KColors.blueGray),
       ),
       divider(),
-      Text(
-        'edit'.tr(),
-        style: const TextStyle(
-          color: KColors.blueGray,
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
+      GestureDetector(
+        onTap: () {
+          if (postModel != null) {
+            context.pushReplacementNamed('editor', extra: postModel);
+          }
+        },
+        child: Text(
+          'edit'.tr(),
+          style: const TextStyle(
+            color: KColors.blueGray,
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
       const SizedBox(width: 15),

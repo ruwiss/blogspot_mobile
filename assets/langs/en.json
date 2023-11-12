@@ -38,5 +38,8 @@
     "delete": "Delete",
     "cancel": "Cancel",
     "edit": "Edit",
-    "showMore": "Show More"
+    "showMore": "Show More",
+    "enterPostTitle": "Enter a post title",
+    "enterPageTitle": "Enter a page title",
+    "enterTitle": "Enter a title"
 }

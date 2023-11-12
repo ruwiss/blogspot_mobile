@@ -250,4 +250,18 @@ class HomeViewModel extends BaseViewModel {
     setScrollIndicatorActive(false);
     return true;
   }
+
+  Future<PostModel?> createDraftContent({required String title}) async {
+    final draftType =
+        currentFilter == PostFilter.pages ? PostFilter.pages : PostFilter.posts;
+
+    final response = await _dio.request(
+        url: KStrings.createDraftContent(blogId: blogId, type: draftType),
+        data: {"title": title},
+        method: HttpMethod.post);
+
+    if (response == null) return null;
+
+    return PostModel.fromJson(response.data);
+  }
 }

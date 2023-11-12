@@ -57,4 +57,7 @@ abstract class KStrings {
 
   static String approveComment(CommentModel comment) =>
       "https://www.googleapis.com/blogger/v3/blogs/${comment.blogId}/posts/${comment.postId}/comments/${comment.id}/approve";
+
+  static String createDraftContent({required String blogId, required PostFilter type}) =>
+      "https://www.googleapis.com/blogger/v3/blogs/$blogId/${type.name}?isDraft=true";
 }

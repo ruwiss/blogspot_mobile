@@ -2,8 +2,10 @@ import 'package:blogman/app/base/base_viewmodel.dart';
 import 'package:blogman/app/locator.dart';
 import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/models/post_model.dart';
+import 'package:blogman/ui/views/home/widgets/home_floating_action.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../app/base/base_view.dart';
 import '../../../utils/colors.dart';
@@ -15,7 +17,7 @@ import 'widgets/post_filter.dart';
 import 'widgets/post_item.dart';
 
 class HomeView extends StatefulWidget {
-  HomeView({super.key, required this.blogId});
+  const HomeView({super.key, required this.blogId});
   final String blogId;
 
   @override
@@ -69,6 +71,13 @@ class _HomeViewState extends State<HomeView> {
           onWillPop: () => _willPopScope(model),
           child: Scaffold(
             appBar: const HomeAppBar(),
+            floatingActionButton: CreateContentAction(
+              onDraftCreated: (postModel) {
+                context.pushNamed('editor', extra: postModel);
+              },
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniEndFloat,
             body: Center(
               child: Column(
                 children: [

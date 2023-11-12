@@ -34,6 +34,8 @@ class PostImage extends StatelessWidget {
                       placeholder: KImages.placeholder,
                       image: postModel?.image ?? imageUrl!,
                       fit: BoxFit.cover,
+                      imageErrorBuilder: (context, error, stackTrace) =>
+                          const SizedBox(),
                     ),
                   )
                 : Container(

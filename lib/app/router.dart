@@ -1,7 +1,10 @@
 import 'package:blogman/app/locator.dart';
+import 'package:blogman/models/post_model.dart';
 import 'package:blogman/ui/views/auth/auth_view.dart';
 import 'package:blogman/ui/views/comments/comments_view.dart';
 import 'package:blogman/ui/views/comments/comments_viewmodel.dart';
+import 'package:blogman/ui/views/editor/editor_view.dart';
+import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:blogman/ui/views/preview/preview_view.dart';
 import 'package:blogman/ui/views/preview/preview_viewmodel.dart';
 import 'package:blogman/ui/views/profile/profile_view.dart';
@@ -47,10 +50,21 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final params = state.uri.queryParameters;
         return ChangeNotifierProvider<PreviewViewModel>(
-        create: (context) => PreviewViewModel(),
-        child:
-            PreviewView(contentUrl: params['contentUrl']!, previewImgUrl: params['previewImgUrl']),
-      );
+          create: (context) => PreviewViewModel(),
+          child: PreviewView(
+              contentUrl: params['contentUrl']!,
+              previewImgUrl: params['previewImgUrl']),
+        );
+      },
+    ),
+    GoRoute(
+      path: '/editor',
+      name: 'editor',
+      builder: (context, state) {
+        return ChangeNotifierProvider<EditorViewModel>(
+          create: (context) => EditorViewModel(),
+          child: EditorView(postModel: state.extra as PostModel),
+        );
       },
     ),
   ],
