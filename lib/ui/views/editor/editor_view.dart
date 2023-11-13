@@ -145,7 +145,10 @@ class _EditorViewState extends State<EditorView> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      await _editorController.embedImage(_tImageInput.text);
+                      _setImageInputVisibility(false);
+                    },
                     child: const Icon(
                       Icons.add_circle_outline,
                       color: KColors.blue,

@@ -23,13 +23,11 @@ class EditorViewModel extends BaseViewModel {
     ToolBarStyle.align,
     ToolBarStyle.blockQuote,
     ToolBarStyle.codeBlock,
-    ToolBarStyle.link,
-    ToolBarStyle.headerOne,
-    ToolBarStyle.headerTwo,
+    ToolBarStyle.addTable,
     ToolBarStyle.listBullet,
     ToolBarStyle.listOrdered,
-    ToolBarStyle.addTable,
-    ToolBarStyle.editTable,
+    ToolBarStyle.headerOne,
+    ToolBarStyle.headerTwo,
   ];
 
   void setPostModel(PostModel postModel) {
