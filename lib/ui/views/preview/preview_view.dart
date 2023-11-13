@@ -56,7 +56,7 @@ class _PreviewViewState extends State<PreviewView> {
                   ),
                   actions: _appBarActions(model.postModel),
                   expandedHeight: (widget.previewImgUrl == null ||
-                              !widget.previewImgUrl.toString().isPicture()) &&
+                              widget.previewImgUrl!.isEmpty) &&
                           model.postModel?.image == null
                       ? 80
                       : 290,

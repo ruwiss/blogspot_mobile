@@ -1,3 +1,4 @@
+import 'package:blogman/enums/post_filter_enum.dart';
 import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:blogman/ui/views/editor/widgets/content_settings.dart';
 import 'package:blogman/utils/colors.dart';
@@ -59,7 +60,11 @@ class _EditorAppBarState extends State<EditorAppBar> {
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.send, color: KColors.dark),
+            icon: Icon(
+                editorViewModel.postModel?.status != PostStatus.draft
+                    ? Icons.send_and_archive
+                    : Icons.send,
+                color: KColors.dark),
           ),
         ],
       ),

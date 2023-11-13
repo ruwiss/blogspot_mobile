@@ -42,13 +42,13 @@ class PostModel {
   final DateTime updated;
   final String url;
   final String selfLink;
-  final String title;
-  final String content;
+  String title;
+  String content;
   final AuthorModel author;
   final PostReplies? replies;
-  final List<String> labels;
+  List<String> labels;
   final String? image;
-  final PostStatus? status;
+  PostStatus? status;
   bool readerComments;
 
   factory PostModel.fromJson(Map<String, dynamic> json) {

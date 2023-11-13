@@ -61,8 +61,10 @@ class PostFilterWidget extends StatelessWidget {
             _otherFilterItem(OtherFilter.defaultValues),
           if (_homeViewModel.currentFilter == PostFilter.posts)
             _otherFilterItem(OtherFilter.scheduled, icon: Icons.timer),
-          _otherFilterItem(OtherFilter.ascending),
-          _otherFilterItem(OtherFilter.descending),
+          _otherFilterItem(OtherFilter.ascending,
+              enabled: _homeViewModel.sortOption != SortOption.ascending),
+          _otherFilterItem(OtherFilter.descending,
+              enabled: _homeViewModel.sortOption != SortOption.descending),
         ],
         child: const Icon(
           Icons.tune,
@@ -73,10 +75,11 @@ class PostFilterWidget extends StatelessWidget {
   }
 
   PopupMenuItem<OtherFilter> _otherFilterItem(OtherFilter filter,
-      {IconData? icon}) {
+      {IconData? icon, bool enabled = true}) {
     final bool isDefaultValues = filter == OtherFilter.defaultValues;
     return PopupMenuItem(
       value: filter,
+      enabled: enabled,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

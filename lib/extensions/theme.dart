@@ -10,6 +10,7 @@ extension ThemeDataExtension on BuildContext {
         textSelectionTheme: TextSelectionThemeData(
           selectionColor: KColors.orange.withOpacity(.3),
           cursorColor: KColors.orange,
+          selectionHandleColor: KColors.blue,
         ),
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
