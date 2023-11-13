@@ -20,8 +20,8 @@ class EditorAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _EditorAppBarState extends State<EditorAppBar> {
   @override
   Widget build(BuildContext context) {
-    final editorViewModel = Provider.of<EditorViewModel>(context, listen: false);
-    
+    final editorViewModel =
+        Provider.of<EditorViewModel>(context, listen: false);
     return PreferredSize(
       preferredSize: widget.preferredSize,
       child: AppBar(
