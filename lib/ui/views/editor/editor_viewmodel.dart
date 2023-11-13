@@ -20,11 +20,15 @@ class EditorViewModel extends BaseViewModel {
     "h1",
     "h2",
     "div",
+    "br",
     "a",
     "img",
     "code",
     "hr",
-    "blockquote"
+    "blockquote",
+    "ol",
+    "ul",
+    "li"
   ];
 
   PostModel? _postModel;
@@ -77,15 +81,17 @@ class EditorViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void addHtmlTag({required String tag, bool endTag = true}) {
+  void addHtmlTag({required String tag}) {
+    final singleTags = ['br', 'hr'];
+
     // cursor position
     final selection = htmlController.selection;
     final currentText = htmlController.text;
     if (tag == '🏷️') tag = '';
-    String tag1 = '';
+
+    String tag1 = '<$tag>';
     String tag2 = '';
-    if (endTag) {
-      tag1 = '<$tag>';
+    if (!singleTags.contains(tag)) {
       tag2 = '</$tag>';
     }
 

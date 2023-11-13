@@ -4,7 +4,6 @@ import 'package:blogman/ui/views/editor/widgets/editor_appbar.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 import 'editor_viewmodel.dart';
@@ -223,10 +222,7 @@ class _EditorViewState extends State<EditorView> {
                     controller: model.htmlController,
                     maxLines: null,
                     keyboardType: TextInputType.multiline,
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(.6),
-                      fontSize: 16,
-                    ),
+                    style: const TextStyle(color: KColors.dark, fontSize: 16),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'startWritingHtml'.tr(),
