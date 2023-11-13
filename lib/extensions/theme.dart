@@ -8,7 +8,9 @@ extension ThemeDataExtension on BuildContext {
         primaryTextTheme:
             ThemeData.light().textTheme.apply(fontFamily: "Nunito Sans"),
         textSelectionTheme: TextSelectionThemeData(
-            selectionColor: KColors.orange.withOpacity(.3)),
+          selectionColor: KColors.orange.withOpacity(.3),
+          cursorColor: KColors.orange,
+        ),
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
           primary: Colors.white,

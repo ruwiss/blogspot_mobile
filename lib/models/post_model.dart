@@ -33,6 +33,7 @@ class PostModel {
     required this.labels,
     this.image,
     this.status,
+    required this.readerComments,
   });
 
   final String id;
@@ -48,6 +49,7 @@ class PostModel {
   final List<String> labels;
   final String? image;
   final PostStatus? status;
+  bool readerComments;
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
@@ -60,6 +62,7 @@ class PostModel {
       title: json['title'] as String,
       content: json['content'] as String,
       author: AuthorModel.fromJson(json['author']),
+      readerComments: json['readerComments'] == 'ALLOW',
       replies: json['replies'] != null
           ? PostReplies.fromJson(json['replies'])
           : null,
@@ -91,6 +94,7 @@ class PostModel {
         'labels': labels,
         'images': image != null ? [image] : [],
         'status': status?.name,
+        'readerComments': readerComments,
       };
 }
 

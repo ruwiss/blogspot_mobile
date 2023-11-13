@@ -44,5 +44,13 @@
     "enterTitle": "Enter a title",
     "startWriting": "Start writing something for your blog 😊",
     "length": "Length",
-    "imgUrl": "Image URL"
+    "imgUrl": "Image URL",
+    "contentSettings": "Content Settings",
+    "contentTitle": "Title",
+    "contentLabels": "Labels: animals, cats",
+    "contentComments": "Comments:",
+    "on": "ON",
+    "off": "OFF",
+    "convertToDraft": "Convert to Draft",
+    "schedulePost": "Schedule Post"
 }

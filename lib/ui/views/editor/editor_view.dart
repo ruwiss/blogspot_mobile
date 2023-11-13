@@ -53,8 +53,7 @@ class _EditorViewState extends State<EditorView> {
           child: Scaffold(
             backgroundColor: KColors.whiteSmoke,
             appBar: EditorAppBar(
-              title: model.postModel?.title ?? widget.postModel.title,
-            ),
+                title: model.postModel?.title ?? widget.postModel.title),
             body: model.postModel == null
                 ? const CircularProgressIndicator()
                 : Column(
@@ -136,7 +135,6 @@ class _EditorViewState extends State<EditorView> {
           controller: _tImageInput,
           focusNode: _tImageInputFocus,
           style: const TextStyle(color: KColors.dark),
-          cursorColor: KColors.orange,
           decoration: InputDecoration(
             focusedBorder: const UnderlineInputBorder(),
             hintText: 'imgUrl'.tr(),

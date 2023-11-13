@@ -88,7 +88,6 @@ class _CreateContentActionState extends State<CreateContentAction> {
           child: TextFormField(
             controller: _tTitle,
             focusNode: _tTitleFocus,
-            cursorColor: KColors.orange,
             textInputAction: TextInputAction.next,
             onFieldSubmitted: (value) async {
               final postModel = await locator<HomeViewModel>()

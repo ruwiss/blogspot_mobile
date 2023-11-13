@@ -8,12 +8,10 @@ class EditorViewModel extends BaseViewModel {
   PostModel? get postModel => _postModel;
 
   int contentLength = 0;
-
   void setContentLength(int value) {
     contentLength = value;
     notifyListeners();
   }
-
 
   final customToolBarList = [
     ToolBarStyle.undo,
@@ -36,7 +34,12 @@ class EditorViewModel extends BaseViewModel {
 
   void setPostModel(PostModel postModel) {
     _postModel = postModel;
-    setContentLength(postModel.content.length);
+    contentLength = postModel.content.length;
+    notifyListeners();
+  }
+
+  void setReaderComments({bool? value}) {
+    postModel!.readerComments = value ?? !postModel!.readerComments;
     notifyListeners();
   }
 }

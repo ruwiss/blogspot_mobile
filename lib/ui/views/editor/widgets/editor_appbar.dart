@@ -1,7 +1,9 @@
+import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
+import 'package:blogman/ui/views/editor/widgets/content_settings.dart';
 import 'package:blogman/utils/colors.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class EditorAppBar extends StatefulWidget implements PreferredSizeWidget {
   const EditorAppBar({super.key, required this.title, this.actions});
@@ -16,15 +18,10 @@ class EditorAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _EditorAppBarState extends State<EditorAppBar> {
-  final _tTitleFocus = FocusNode();
-  final _tTitle = TextEditingController();
-
-  bool _showInput = false;
-
-  void _setInputVisibility(bool value) => setState(() => _showInput = value);
-
   @override
   Widget build(BuildContext context) {
+    final editorViewModel = Provider.of<EditorViewModel>(context, listen: false);
+    
     return PreferredSize(
       preferredSize: widget.preferredSize,
       child: AppBar(
@@ -37,30 +34,24 @@ class _EditorAppBarState extends State<EditorAppBar> {
             size: 35,
           ),
         ),
-        title: _showInput
-            ? _inputFieldWidget()
-            : Text(
-                widget.title,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: KColors.dark,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+        title: Text(
+          widget.title,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            color: KColors.dark,
+            fontSize: 17,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
-              if (!_showInput) {
-                _tTitle.text = widget.title;
-                _setInputVisibility(true);
-                _tTitleFocus.requestFocus();
-              } else {
-                _setInputVisibility(false);
-              }
+              showDialog(
+                context: context,
+                builder: (_) => ContentSettings(editorContext: context),
+              );
             },
-            icon: Icon(_showInput ? Icons.check_circle : Icons.edit,
-                color: _showInput ? KColors.blue : KColors.dark),
+            icon: const Icon(Icons.edit, color: KColors.dark),
           ),
           IconButton(
             onPressed: () {},
@@ -72,41 +63,6 @@ class _EditorAppBarState extends State<EditorAppBar> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _inputFieldWidget() {
-    const textStyle = TextStyle(
-        fontSize: 18, fontWeight: FontWeight.w700, color: KColors.dark);
-
-    const inputBorder = UnderlineInputBorder(
-      borderSide: BorderSide(color: KColors.blueGray),
-    );
-    return Stack(
-      alignment: Alignment.centerRight,
-      children: [
-        TextField(
-          controller: _tTitle,
-          focusNode: _tTitleFocus,
-          style: textStyle,
-          cursorColor: KColors.blue,
-          decoration: InputDecoration(
-            hintText: 'enterTitle'.tr(),
-            hintStyle: textStyle.copyWith(color: Colors.black38),
-            isDense: true,
-            enabledBorder: inputBorder,
-            focusedBorder: inputBorder,
-          ),
-        ),
-        InkWell(
-          onTap: () => _tTitle.clear(),
-          child: const Icon(
-            Icons.close,
-            size: 18,
-            color: KColors.dark,
-          ),
-        ),
-      ],
     );
   }
 }
