@@ -58,6 +58,7 @@
     "saveSettings": "Save Settings",
     "contentSaved": "Content Saved",
     "contentPublished": "Content Published",
-    "copied": "Content url copied to the clipboard."
+    "copied": "Content url copied to the clipboard.",
+    "editorExitMsg": "The editor will be closed. Tap again to exit."
 
 }

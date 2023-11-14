@@ -1,9 +1,11 @@
 import 'package:blogman/app/base/base_viewmodel.dart';
+import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/models/post_model.dart';
 import 'package:blogman/ui/views/editor/widgets/editor_appbar.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 import 'editor_viewmodel.dart';
@@ -22,6 +24,8 @@ class _EditorViewState extends State<EditorView> {
 
   bool _showImageInput = false;
 
+  DateTime? currentBackPressTime;
+
   void _setImageInputVisibility(bool value) {
     setState(() => _showImageInput = value);
     if (value) {
@@ -29,6 +33,17 @@ class _EditorViewState extends State<EditorView> {
     } else {
       _tImageInput.clear();
     }
+  }
+
+  Future<bool> _onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      context.showInfo(text: 'editorExitMsg'.tr());
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 
   void _setInitialValue() {
@@ -46,22 +61,28 @@ class _EditorViewState extends State<EditorView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<EditorViewModel>(
-      builder: (context, model, child) => Container(
-        color: KColors.whiteSmoke,
-        child: SafeArea(
-          child: Scaffold(
-            backgroundColor: KColors.whiteSmoke,
-            appBar: EditorAppBar(
-                model: model,
-                title: model.postModel?.title ?? widget.postModel.title),
-            body: model.postModel == null || model.state == ViewState.busy
-                ? const Center(
-                    child: CircularProgressIndicator(color: KColors.blue),
-                  )
-                : model.htmlEditorView
-                    ? _htmlEditorView(model)
-                    : _textEditorView(model),
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Consumer<EditorViewModel>(
+        builder: (context, model, child) => Container(
+          color: KColors.whiteSmoke,
+          child: SafeArea(
+            child: Scaffold(
+              backgroundColor: KColors.whiteSmoke,
+              appBar: EditorAppBar(
+                  onBackPressed: () async {
+                    if (await _onWillPop() && mounted) context.pop();
+                  },
+                  model: model,
+                  title: model.postModel?.title ?? widget.postModel.title),
+              body: model.postModel == null || model.state == ViewState.busy
+                  ? const Center(
+                      child: CircularProgressIndicator(color: KColors.blue),
+                    )
+                  : model.htmlEditorView
+                      ? _htmlEditorView(model)
+                      : _textEditorView(model),
+            ),
           ),
         ),
       ),

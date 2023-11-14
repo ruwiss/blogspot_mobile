@@ -10,10 +10,11 @@ import 'package:go_router/go_router.dart';
 
 class EditorAppBar extends StatefulWidget implements PreferredSizeWidget {
   const EditorAppBar(
-      {super.key, required this.model, required this.title, this.actions});
+      {super.key, required this.model, required this.title, this.actions, this.onBackPressed});
   final EditorViewModel model;
   final String title;
   final List<Widget>? actions;
+  final VoidCallback? onBackPressed;
 
   @override
   Size get preferredSize => const Size.fromHeight(56);
@@ -78,7 +79,7 @@ class _EditorAppBarState extends State<EditorAppBar> {
       child: AppBar(
         backgroundColor: KColors.antiqueWhite,
         leading: IconButton(
-          onPressed: () => context.pop(),
+          onPressed: widget.onBackPressed,
           icon: const Icon(
             Icons.keyboard_arrow_left,
             color: KColors.dark,
