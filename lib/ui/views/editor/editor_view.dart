@@ -53,6 +53,7 @@ class _EditorViewState extends State<EditorView> {
           child: Scaffold(
             backgroundColor: KColors.whiteSmoke,
             appBar: EditorAppBar(
+                model: model,
                 title: model.postModel?.title ?? widget.postModel.title),
             body: model.postModel == null || model.state == ViewState.busy
                 ? const Center(

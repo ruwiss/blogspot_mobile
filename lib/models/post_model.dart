@@ -83,18 +83,13 @@ class PostModel {
   Map<String, dynamic> toJson() => {
         'id': id,
         'blog': {'id': blogId},
-        'published': published.toIso8601String(),
-        'updated': updated.toIso8601String(),
         'url': url,
         'selfLink': selfLink,
         'title': title,
         'content': content,
-        'author': author.toJson(),
-        'replies': replies?.toJson(),
         'labels': labels,
-        'images': image != null ? [image] : [],
         'status': status?.name,
-        'readerComments': readerComments,
+        'readerComments': readerComments ? 'ALLOW' : 'DONT_ALLOW_HIDE_EXISTING',
       };
 }
 

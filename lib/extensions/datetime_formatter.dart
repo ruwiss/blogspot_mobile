@@ -26,7 +26,7 @@ extension DateTimeFormatter on DateTime {
       text = 'dateTimeFormat'.tr(gender: 'yearsAgo', args: ['$years']);
     }
 
-    if (isUpdated) text = 'updated $text';
+    if (isUpdated) text = 'updated'.tr(args: [text]);
 
     return text;
   }

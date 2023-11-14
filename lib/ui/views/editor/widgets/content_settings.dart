@@ -1,8 +1,10 @@
 import 'package:blogman/enums/post_filter_enum.dart';
+import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ContentSettings extends StatefulWidget {
@@ -48,24 +50,45 @@ class _ContentSettingsState extends State<ContentSettings> {
                     color: KColors.dark,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.delete_sweep,
-                    size: 25,
-                    color: KColors.orange,
-                  ),
-                )
+                editorViewModel.isActiveState('deleteContent')
+                    ? const SizedBox(
+                        height: 25,
+                        width: 25,
+                        child: CircularProgressIndicator(color: KColors.orange))
+                    : IconButton(
+                        onPressed: () async {
+                          setState(() {
+                            editorViewModel.addState('deleteContent');
+                          });
+                          final status = await editorViewModel.deleteContent();
+                          setState(() {
+                            editorViewModel.deleteState('deleteContent');
+                          });
+                          if (!status) {
+                            if (mounted) context.showError();
+                          } else {
+                            if (mounted) context.pop({'goBack': true});
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.delete_sweep,
+                          size: 25,
+                          color: KColors.orange,
+                        ),
+                      )
               ],
             ),
             const SizedBox(height: 20),
             _inputWidget(
               controller: _tTitle,
               hint: 'contentTitle'.tr(),
+              onChanged: (value) => editorViewModel.postModel!.title = value,
             ),
             _inputWidget(
               controller: _tLabel,
               hint: 'contentLabels'.tr(),
+              onChanged: (value) => editorViewModel.postModel!.labels =
+                  value.split(',').map((e) => e.trim()).toList(),
             ),
             _inputWidget(
               hint: 'contentComments'.tr(),
@@ -79,13 +102,14 @@ class _ContentSettingsState extends State<ContentSettings> {
             if (editorViewModel.postModel!.status == PostStatus.live)
               _settingButton(
                 text: 'convertToDraft'.tr(),
-                onTap: () {},
+                onTap: editorViewModel.convertToDraft,
               ),
             if (editorViewModel.postModel!.status == PostStatus.draft)
               _settingButton(
                 text: 'schedulePost'.tr(),
                 onTap: () {},
-              )
+              ),
+            _settingButton(text: 'saveSettings'.tr())
           ],
         ),
       ),
@@ -100,7 +124,10 @@ class _ContentSettingsState extends State<ContentSettings> {
         color: KColors.whiteSmoke,
         borderRadius: borderRadius,
         child: InkWell(
-          onTap: onTap,
+          onTap: () {
+            context.pop();
+            onTap?.call();
+          },
           borderRadius: borderRadius,
           child: Padding(
             padding: const EdgeInsets.all(8),
@@ -118,12 +145,12 @@ class _ContentSettingsState extends State<ContentSettings> {
     );
   }
 
-  Widget _inputWidget({
-    TextEditingController? controller,
-    required String hint,
-    bool? switchEnabled,
-    Function()? onPressed,
-  }) {
+  Widget _inputWidget(
+      {TextEditingController? controller,
+      required String hint,
+      bool? switchEnabled,
+      Function()? onPressed,
+      Function(String value)? onChanged}) {
     final bool isSwitch = switchEnabled != null;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -135,6 +162,7 @@ class _ContentSettingsState extends State<ContentSettings> {
             onTap: () {
               if (isSwitch) onPressed?.call();
             },
+            onChanged: onChanged,
             readOnly: isSwitch,
             style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(.6)),
             decoration: InputDecoration(

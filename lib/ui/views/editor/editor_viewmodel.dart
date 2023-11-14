@@ -1,4 +1,8 @@
+import 'package:blogman/app/locator.dart';
+import 'package:blogman/enums/post_filter_enum.dart';
 import 'package:blogman/models/post_model.dart';
+import 'package:blogman/services/http_service.dart';
+import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
@@ -7,6 +11,8 @@ import '../../../app/base/base_viewmodel.dart';
 class EditorViewModel extends BaseViewModel {
   final editorController = QuillEditorController();
   final htmlController = TextEditingController();
+
+  final _dio = locator<HttpService>();
 
   bool htmlEditorView = false;
   final List<String> htmlToolbar = [
@@ -100,5 +106,72 @@ class EditorViewModel extends BaseViewModel {
     htmlController.text = newText;
     htmlController.selection =
         TextSelection.collapsed(offset: selection.baseOffset + tag1.length + 1);
+  }
+
+  Future<void> updatePostContent() async => postModel!.content =
+      htmlEditorView ? htmlController.text : await editorController.getText();
+
+  Future<void> updateHomePageModel() async {
+    final homeViewModel = locator<HomeViewModel>();
+    await homeViewModel.getContents();
+  }
+
+  Future<bool> updateContent() async {
+    addState('sendContent');
+    await updatePostContent();
+
+    final response = await _dio.request(
+        url: postModel!.selfLink,
+        method: HttpMethod.put,
+        data: postModel!.toJson());
+
+    if (response == null) {
+      deleteState('sendContent');
+      return false;
+    }
+
+    deleteState('sendContent');
+    return true;
+  }
+
+  void convertToDraft() async {
+    addState('settings');
+    final response = await _dio.request(
+        url: '${postModel!.selfLink}/revert', method: HttpMethod.post);
+    if (response != null) postModel!.status = PostStatus.draft;
+    await updateHomePageModel();
+    deleteState('settings');
+  }
+
+  Future<bool> publishDraft() async {
+    addState('sendContent');
+
+    final response = await _dio.request(
+        url: '${postModel!.selfLink}/publish', method: HttpMethod.post);
+
+    if (response == null) {
+      deleteState('sendContent');
+      return false;
+    }
+    postModel!.status = PostStatus.live; // zamanlı ise scheduled yap
+
+    await updateHomePageModel();
+    deleteState('sendContent');
+    return true;
+  }
+
+  Future<bool> deleteContent() async {
+    final response = await _dio.request(
+        url: postModel!.selfLink,
+        method: HttpMethod.delete,
+        data: {"useTrash": true});
+
+    if (response == null) {
+      deleteState('deleteContent');
+      return false;
+    }
+
+    await updateHomePageModel();
+    return true;
   }
 }

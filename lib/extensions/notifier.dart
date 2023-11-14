@@ -9,7 +9,7 @@ extension NotifierExtension on BuildContext {
         text == null && error ? 'unknownError'.tr() : text!,
         style: const TextStyle(color: Colors.white, fontSize: 17),
       ),
-      backgroundColor: error ? KColors.red : KColors.blue,
+      backgroundColor: error ? KColors.red : KColors.orange,
     );
   }
 
