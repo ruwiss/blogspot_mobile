@@ -41,8 +41,24 @@ class EditorViewModel extends BaseViewModel {
   PostModel? get postModel => _postModel;
 
   int contentLength = 0;
+
+  DateTime? publishDate;
+
+  PostFilter currentPostFilter() {
+    final selfLink = postModel!.selfLink;
+    if (selfLink.contains('/posts/')) {
+      return PostFilter.posts;
+    } 
+    return PostFilter.pages;
+  }
+
   void setContentLength(int value) {
     contentLength = value;
+    notifyListeners();
+  }
+
+  void setPublishDate(DateTime? dateTime) {
+    publishDate = dateTime;
     notifyListeners();
   }
 
@@ -66,6 +82,9 @@ class EditorViewModel extends BaseViewModel {
   void setPostModel(PostModel postModel) {
     _postModel = postModel;
     contentLength = postModel.content.length;
+    if (postModel.status == PostStatus.scheduled) {
+      publishDate = postModel.published;
+    }
     notifyListeners();
   }
 
@@ -146,14 +165,23 @@ class EditorViewModel extends BaseViewModel {
   Future<bool> publishDraft() async {
     addState('sendContent');
 
+    Map<String, dynamic> data = {};
+    if (publishDate != null) {
+      data['publishDate'] = publishDate!.toUtc().toIso8601String();
+    }
+
     final response = await _dio.request(
-        url: '${postModel!.selfLink}/publish', method: HttpMethod.post);
+      url: '${postModel!.selfLink}/publish',
+      method: HttpMethod.post,
+      data: data,
+    );
 
     if (response == null) {
       deleteState('sendContent');
       return false;
     }
-    postModel!.status = PostStatus.live; // zamanlı ise scheduled yap
+    postModel!.status =
+        publishDate != null ? PostStatus.scheduled : PostStatus.live;
 
     await updateHomePageModel();
     deleteState('sendContent');

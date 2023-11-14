@@ -7,9 +7,14 @@ import '../../utils/colors.dart';
 import '../../utils/images.dart';
 
 class PostImage extends StatelessWidget {
-  const PostImage({super.key, this.postModel, this.imageUrl});
+  const PostImage(
+      {super.key,
+      this.postModel,
+      this.imageUrl,
+      this.hideScheduledEffect = false});
   final PostModel? postModel;
   final String? imageUrl;
+  final bool hideScheduledEffect;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +53,8 @@ class PostImage extends StatelessWidget {
 
         // Zamanlanmış postlar için vinyet efekti ve süresi.
         if (postModel?.status != null &&
-            postModel?.status == PostStatus.scheduled)
+            postModel?.status == PostStatus.scheduled &&
+            !hideScheduledEffect)
           ..._scheduledView()
       ],
     );
@@ -61,16 +67,15 @@ class PostImage extends StatelessWidget {
           left: -100,
           right: -100,
           child: Container(
-            decoration: const BoxDecoration(
-              shape: BoxShape
-                  .circle, // İsterseniz bu şekli istediğiniz gibi değiştirebilirsiniz
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
               gradient: RadialGradient(
                 center: Alignment
                     .center, // Gradientin merkezi (burada container'ın merkezi)
                 radius: 1, // Gradientin dışarı doğru yayılma oranı
                 colors: [
                   Colors.black26,
-                  Colors.black87,
+                  Colors.black.withOpacity(.7),
                   Colors.black,
                 ], // Gradientin renkleri
               ),
@@ -78,6 +83,7 @@ class PostImage extends StatelessWidget {
           ),
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'scheduled'.tr().toUpperCase(),

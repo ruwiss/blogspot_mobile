@@ -105,7 +105,10 @@ class HomeViewModel extends BaseViewModel {
         }
         break;
     }
-    if (isFilterChanged) getContents();
+    if (isFilterChanged) {
+      lastUsedToken = '';
+      getContents();
+    }
 
     notifyListeners();
   }
@@ -113,6 +116,7 @@ class HomeViewModel extends BaseViewModel {
   void clearOrderFilter() {
     sortOption = SortOption.descending;
     postStatus = PostStatus.live;
+    lastUsedToken = '';
     isFilterChanged = false;
   }
 

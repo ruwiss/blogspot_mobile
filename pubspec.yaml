@@ -49,6 +49,7 @@ dependencies:
   quill_html_editor: ^2.2.7
   flutter_html: ^3.0.0-beta.2
   html: ^0.15.4
+  flutter_datetime_picker_plus: ^2.1.0
 
 dev_dependencies:
   flutter_test:

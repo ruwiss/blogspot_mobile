@@ -1,4 +1,5 @@
 import 'package:blogman/enums/post_filter_enum.dart';
+import 'package:blogman/extensions/datetime_formatter.dart';
 import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:blogman/utils/colors.dart';
@@ -67,7 +68,7 @@ class _ContentSettingsState extends State<ContentSettings> {
                           if (!status) {
                             if (mounted) context.showError();
                           } else {
-                            if (mounted) context.pop({'goBack': true});
+                            if (mounted) context.pop('goBack');
                           }
                         },
                         icon: const Icon(
@@ -84,30 +85,43 @@ class _ContentSettingsState extends State<ContentSettings> {
               hint: 'contentTitle'.tr(),
               onChanged: (value) => editorViewModel.postModel!.title = value,
             ),
-            _inputWidget(
-              controller: _tLabel,
-              hint: 'contentLabels'.tr(),
-              onChanged: (value) => editorViewModel.postModel!.labels =
-                  value.split(',').map((e) => e.trim()).toList(),
-            ),
-            _inputWidget(
-              hint: 'contentComments'.tr(),
-              onPressed: () {
-                editorViewModel.setReaderComments();
-                setState(() {});
-              },
-              switchEnabled: editorViewModel.postModel!.readerComments,
-            ),
+            if (editorViewModel.currentPostFilter() != PostFilter.pages)
+              _inputWidget(
+                controller: _tLabel,
+                hint: 'contentLabels'.tr(),
+                onChanged: (value) => editorViewModel.postModel!.labels =
+                    value.split(',').map((e) => e.trim()).toList(),
+              ),
+            if (editorViewModel.currentPostFilter() != PostFilter.pages)
+              _inputWidget(
+                hint: 'contentComments'.tr(),
+                onPressed: () {
+                  editorViewModel.setReaderComments();
+                  setState(() {});
+                },
+                switchEnabled: editorViewModel.postModel!.readerComments,
+              ),
             const SizedBox(height: 16),
-            if (editorViewModel.postModel!.status == PostStatus.live)
+            if (editorViewModel.postModel!.status != PostStatus.draft)
               _settingButton(
                 text: 'convertToDraft'.tr(),
                 onTap: editorViewModel.convertToDraft,
               ),
-            if (editorViewModel.postModel!.status == PostStatus.draft)
+            if (editorViewModel.postModel!.status == PostStatus.draft &&
+                editorViewModel.currentPostFilter() != PostFilter.pages)
               _settingButton(
-                text: 'schedulePost'.tr(),
-                onTap: () {},
+                text: editorViewModel.publishDate != null
+                    ? editorViewModel.publishDate!.formatAsDayMonthYearAndTime()
+                    : 'schedulePost'.tr(),
+                autoPop: false,
+                onTap: () {
+                  if (editorViewModel.publishDate != null) {
+                    editorViewModel.setPublishDate(null);
+                    setState(() {});
+                  } else {
+                    context.pop('showDateTimePicker');
+                  }
+                },
               ),
             _settingButton(text: 'saveSettings'.tr())
           ],
@@ -116,7 +130,8 @@ class _ContentSettingsState extends State<ContentSettings> {
     );
   }
 
-  Widget _settingButton({required String text, VoidCallback? onTap}) {
+  Widget _settingButton(
+      {required String text, VoidCallback? onTap, bool autoPop = true}) {
     final borderRadius = BorderRadius.circular(4);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -125,7 +140,7 @@ class _ContentSettingsState extends State<ContentSettings> {
         borderRadius: borderRadius,
         child: InkWell(
           onTap: () {
-            context.pop();
+            if (autoPop) context.pop();
             onTap?.call();
           },
           borderRadius: borderRadius,

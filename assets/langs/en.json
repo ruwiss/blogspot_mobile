@@ -57,6 +57,7 @@
     "schedulePost": "Schedule Post",
     "saveSettings": "Save Settings",
     "contentSaved": "Content Saved",
-    "contentPublished": "Content Published"
+    "contentPublished": "Content Published",
+    "copied": "Content url copied to the clipboard."
 
 }

@@ -54,7 +54,7 @@ class _PreviewViewState extends State<PreviewView> {
                     onPressed: () => context.pop(),
                     icon: const Icon(Icons.close, color: KColors.dark),
                   ),
-                  actions: _appBarActions(model.postModel),
+                  actions: _appBarActions(model),
                   expandedHeight: (widget.previewImgUrl == null ||
                               widget.previewImgUrl!.isEmpty) &&
                           model.postModel?.image == null
@@ -66,7 +66,8 @@ class _PreviewViewState extends State<PreviewView> {
                           const EdgeInsets.only(left: 10, right: 10, top: 60),
                       child: PostImage(
                         postModel: model.postModel,
-                        imageUrl: widget.previewImgUrl, // for hero animation
+                        imageUrl: widget.previewImgUrl,
+                        hideScheduledEffect: true, // for hero animation
                       ),
                     ),
                   ),
@@ -188,26 +189,33 @@ class _PreviewViewState extends State<PreviewView> {
     );
   }
 
-  List<Widget> _appBarActions(PostModel? postModel) {
+  List<Widget> _appBarActions(PreviewViewModel model) {
     Widget divider() => const SizedBox(
           height: 15,
           child: VerticalDivider(color: KColors.blueGray, width: 15),
         );
     return [
       GestureDetector(
-        onTap: () {},
+        onTap: () {
+          model.copyUrlToClipboard();
+          context.showInfo(text: tr('copied'));
+        },
         child: const Icon(Icons.share, color: KColors.blueGray),
       ),
       divider(),
       GestureDetector(
-        onTap: () {},
+        onTap: () {
+          if (model.postModel != null) {
+            Uri.parse(model.postModel!.url).launch(browser: true);
+          }
+        },
         child: const Icon(Icons.remove_red_eye, color: KColors.blueGray),
       ),
       divider(),
       GestureDetector(
         onTap: () {
-          if (postModel != null) {
-            context.pushReplacementNamed('editor', extra: postModel);
+          if (model.postModel != null) {
+            context.pushReplacementNamed('editor', extra: model.postModel);
           }
         },
         child: Text(

@@ -1,5 +1,6 @@
 import 'package:blogman/services/http_service.dart';
 import 'package:blogman/models/post_model.dart';
+import 'package:flutter/services.dart';
 
 import '../../../app/base/base_viewmodel.dart';
 import '../../../app/locator.dart';
@@ -35,4 +36,7 @@ class PreviewViewModel extends BaseViewModel {
     setState(ViewState.idle);
     return true;
   }
+
+  void copyUrlToClipboard() =>
+      Clipboard.setData(ClipboardData(text: postModel!.url));
 }

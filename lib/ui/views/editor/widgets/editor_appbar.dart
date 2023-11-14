@@ -1,4 +1,5 @@
 import 'package:blogman/enums/post_filter_enum.dart';
+import 'package:blogman/extensions/context_extensions.dart';
 import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:blogman/ui/views/editor/widgets/content_settings.dart';
@@ -49,6 +50,26 @@ class _EditorAppBarState extends State<EditorAppBar> {
     return status;
   }
 
+  void _showSettingsDialog() async {
+    final data = await showDialog(
+      context: context,
+      builder: (_) => ContentSettings(editorContext: context),
+    );
+    // içerik silindiyse sayfayı kapat
+    if (data != null && mounted) {
+      if (data == 'goBack') {
+        context.pop();
+      } else if (data == 'showDateTimePicker') {
+        context.showDateTimePicker(
+          onConfirm: (dateTime) {
+            widget.model.setPublishDate(dateTime);
+            _showSettingsDialog();
+          },
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDraft = widget.model.postModel?.status == PostStatus.draft;
@@ -77,16 +98,7 @@ class _EditorAppBarState extends State<EditorAppBar> {
           widget.model.isActiveState('settings')
               ? _loadingWidget()
               : IconButton(
-                  onPressed: () async {
-                    final data = await showDialog(
-                      context: context,
-                      builder: (_) => ContentSettings(editorContext: context),
-                    );
-                    // içerik silindiyse sayfayı kapat
-                    if (data != null && mounted && data['goBack']) {
-                      context.pop();
-                    }
-                  },
+                  onPressed: _showSettingsDialog,
                   icon: const Icon(Icons.edit, color: KColors.dark),
                 ),
           if (isDraft)

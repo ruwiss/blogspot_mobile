@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:go_router/go_router.dart';
 
 extension ContextExtensions on BuildContext {
@@ -26,4 +27,19 @@ extension ContextExtensions on BuildContext {
       ),
     );
   }
+ void showDateTimePicker({Function(DateTime dateTime)? onConfirm}) async {
+    final minTime = DateTime.now();
+    final maxTime = DateTime.now().add(const Duration(days: 365));
+    DatePicker.showDateTimePicker(
+      this,
+      showTitleActions: true,
+      minTime: minTime,
+      maxTime: maxTime,
+      currentTime: DateTime.now(),
+      locale: LocaleType.values.singleWhere(
+          (e) => e.name == Localizations.localeOf(this).toString(),
+          orElse: () => LocaleType.en),
+      onConfirm:onConfirm,
+    );
+  } 
 }
