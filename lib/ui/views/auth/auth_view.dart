@@ -2,6 +2,7 @@ import 'package:blogman/app/base/base_viewmodel.dart';
 import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/extensions/url_launcher.dart';
 import 'package:blogman/services/shared_preferences/settings.dart';
+import 'package:blogman/ui/views/auth/widgets/splash_view.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/images.dart';
 import 'package:blogman/utils/strings.dart';
@@ -35,10 +36,12 @@ class _AuthViewState extends State<AuthView> {
           context.pushReplacementNamed('home',
               pathParameters: {'blogId': selectedBlogId});
         } else {
+          _authViewModel.hideSplash();
           _showBlogSelectionDialog();
         }
       }
     } else {
+      _authViewModel.hideSplash();
       if (context.mounted) context.showError();
     }
   }
@@ -50,8 +53,8 @@ class _AuthViewState extends State<AuthView> {
 
   @override
   void initState() {
-    //locator<AuthViewModel>().signOut();
     _appSettings.isAuth().then((value) {
+      if (!value) _authViewModel.hideSplash();
       if (value && mounted) _authAndNavigate();
     });
     super.initState();
@@ -61,40 +64,44 @@ class _AuthViewState extends State<AuthView> {
   Widget build(BuildContext context) {
     return Consumer<AuthViewModel>(
       builder: (context, model, child) => Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Container(
-                color: KColors.orange,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Image.asset(KImages.logo, width: 114),
-                    _appNameWidget(),
-                    _authInfoWidget(),
-                  ],
-                ),
+        body: model.splash
+            ? const SplashView()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: Container(
+                      color: KColors.orange,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Image.asset(KImages.logo, width: 114),
+                          _appNameWidget(),
+                          _authInfoWidget(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: model.blogList == null ? 1 : 0,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: model.state == ViewState.busy &&
+                              model.blogList == null
+                          ? const CircularProgressIndicator(
+                              color: KColors.orange)
+                          : model.blogList == null
+                              ? _authButtons(context, model)
+                              : BlogSelectWidget(
+                                  model: model,
+                                  onError: (error) =>
+                                      context.showError(error: error)),
+                      transitionBuilder: (child, animation) =>
+                          ScaleTransition(scale: animation, child: child),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Expanded(
-              flex: model.blogList == null ? 1 : 0,
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: model.state == ViewState.busy && model.blogList == null
-                    ? const CircularProgressIndicator(color: KColors.orange)
-                    : model.blogList == null
-                        ? _authButtons(context, model)
-                        : BlogSelectWidget(
-                            model: model,
-                            onError: (error) =>
-                                context.showError(error: error)),
-                transitionBuilder: (child, animation) =>
-                    ScaleTransition(scale: animation, child: child),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

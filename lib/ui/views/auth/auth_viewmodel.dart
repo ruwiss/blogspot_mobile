@@ -12,6 +12,7 @@ import '../../../services/shared_preferences/settings.dart';
 import '../../../utils/strings.dart';
 
 class AuthViewModel extends BaseViewModel {
+  bool splash = true;
   final _appSettings = locator<AppSettings>();
   final _firebaseInstance = FirebaseAuth.instance;
   final _googleAuth = GoogleSignIn(scopes: KStrings.authScopes);
@@ -22,6 +23,11 @@ class AuthViewModel extends BaseViewModel {
   List<BlogModel>? blogList;
   BlogModel? selectedBlog;
   BlogUserInfoModel? blogUserInfoModel;
+
+  void hideSplash() {
+    splash = false;
+    notifyListeners();
+  }
 
   void setBlogList(List<BlogModel>? blogs) {
     blogList = blogs;

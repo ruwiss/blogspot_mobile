@@ -48,7 +48,7 @@ class EditorViewModel extends BaseViewModel {
     final selfLink = postModel!.selfLink;
     if (selfLink.contains('/posts/')) {
       return PostFilter.posts;
-    } 
+    }
     return PostFilter.pages;
   }
 

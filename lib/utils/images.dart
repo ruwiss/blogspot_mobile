@@ -9,9 +9,10 @@ abstract class KImages {
   static const String checkOutline = "$_base/check_outline.svg";
 
   /// IMAGE
-  static const String logo = "$_base/bloggerman.png";
+  static const String logo = "$_base/logo.png";
   static const String google = "$_base/google.png";
   static const String search = "$_base/search.png";
   static const String avatar = "$_base/avatar.png";
   static const String placeholder = "$_base/placeholder.webp";
+  static const String splashBackground = "$_base/splash_background.png";
 }

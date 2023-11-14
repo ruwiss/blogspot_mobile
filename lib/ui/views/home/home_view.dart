@@ -2,6 +2,7 @@ import 'package:blogman/app/base/base_viewmodel.dart';
 import 'package:blogman/app/locator.dart';
 import 'package:blogman/extensions/notifier.dart';
 import 'package:blogman/models/post_model.dart';
+import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:blogman/ui/views/home/widgets/home_floating_action.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void _initState(BuildContext context, HomeViewModel model) async {
+    locator<AuthViewModel>().hideSplash();
     _scrollController.addListener(() => _scrollListener(model));
     // Blog postlarını getir, hata olursa göster.
     model.setBlogId(widget.blogId);
