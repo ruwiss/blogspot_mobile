@@ -1,5 +1,5 @@
-import 'package:blogman/app/app.dart';
-import 'package:blogman/app/base/base_viewmodel.dart';
+import 'package:blogman/core/core.dart';
+import 'package:blogman/core/base/base_viewmodel.dart';
 import 'package:blogman/commons/extensions/extensions.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:easy_localization/easy_localization.dart';

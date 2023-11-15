@@ -1,4 +1,4 @@
-import 'package:blogman/app/app.dart';
+import 'package:blogman/core/core.dart';
 import 'package:blogman/commons/extensions/extensions.dart';
 import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';

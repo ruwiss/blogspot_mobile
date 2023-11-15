@@ -1,5 +1,5 @@
-import '../../../app/base/base_viewmodel.dart';
-import '../../../app/locator.dart';
+import '../../../core/base/base_viewmodel.dart';
+import '../../../core/locator.dart';
 import '../../../commons/enums/post_filter_enum.dart';
 import '../../../commons/models/post_model.dart';
 import '../../../commons/services/services.dart';

@@ -1,4 +1,4 @@
-import 'package:blogman/app/base/base_viewmodel.dart';
+import 'package:blogman/core/base/base_viewmodel.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:blogman/ui/views/auth/models/blog_model.dart';
 import 'package:blogman/ui/views/profile/profile_viewmodel.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/app.dart';
+import '../../../core/core.dart';
 import '../../widgets/widgets.dart';
 import 'widgets/profile_widgets.dart';
 

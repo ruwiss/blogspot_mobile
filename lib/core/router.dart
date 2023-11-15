@@ -1,4 +1,4 @@
-import 'package:blogman/app/app.dart';
+import 'package:blogman/core/core.dart';
 import 'package:blogman/ui/views/auth/auth_view.dart';
 import 'package:blogman/ui/views/comments/comments_view.dart';
 import 'package:blogman/ui/views/comments/comments_viewmodel.dart';

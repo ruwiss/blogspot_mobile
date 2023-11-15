@@ -1,11 +1,11 @@
-import 'package:blogman/app/base/base_viewmodel.dart';
+import 'package:blogman/core/base/base_viewmodel.dart';
 import 'package:blogman/commons/extensions/extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/app.dart';
+import '../../../core/core.dart';
 import '../../../commons/services/services.dart';
 import '../../../utils/utils.dart';
 import 'auth_viewmodel.dart';

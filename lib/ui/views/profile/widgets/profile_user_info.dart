@@ -1,10 +1,10 @@
-import 'package:blogman/app/locator.dart';
+import 'package:blogman/core/locator.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../app/router.dart';
+import '../../../../core/router.dart';
 import '../../../../utils/utils.dart';
 
 class ProfileUserInfo extends StatelessWidget {

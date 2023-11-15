@@ -3,7 +3,7 @@ import 'package:blogman/utils/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../app/locator.dart';
+import '../../../../core/locator.dart';
 import '../../../../commons/enums/post_filter_enum.dart';
 
 class PostFilterWidget extends StatelessWidget {

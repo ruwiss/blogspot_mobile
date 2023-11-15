@@ -1,4 +1,4 @@
-import 'package:blogman/app/app.dart';
+import 'package:blogman/core/core.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/utils.dart';

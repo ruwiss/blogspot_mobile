@@ -1,4 +1,4 @@
-import 'package:blogman/app/locator.dart';
+import 'package:blogman/core/locator.dart';
 import 'package:blogman/commons/extensions/extensions.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';

@@ -1,4 +1,4 @@
-import 'package:blogman/app/locator.dart';
+import 'package:blogman/core/locator.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';

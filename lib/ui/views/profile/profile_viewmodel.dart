@@ -1,9 +1,9 @@
-import 'package:blogman/app/locator.dart';
+import 'package:blogman/core/locator.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:blogman/ui/views/profile/models/statistics_model.dart';
 
-import '../../../app/base/base_viewmodel.dart';
+import '../../../core/base/base_viewmodel.dart';
 import '../../../commons/services/services.dart';
 import '../../../utils/utils.dart';
 import '../auth/models/auth_models.dart';

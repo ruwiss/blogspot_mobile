@@ -1,8 +1,8 @@
-import 'package:blogman/app/locator.dart';
+import 'package:blogman/core/locator.dart';
 import 'package:blogman/ui/views/comments/models/comments_model.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:blogman/utils/strings.dart';
-import '../../../app/base/base_viewmodel.dart';
+import '../../../core/base/base_viewmodel.dart';
 import '../../../commons/services/services.dart';
 
 class CommentsViewModel extends BaseViewModel {

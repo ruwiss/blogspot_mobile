@@ -1,4 +1,4 @@
-import 'package:blogman/app/app.dart';
+import 'package:blogman/core/core.dart';
 import 'package:blogman/commons/extensions/string_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

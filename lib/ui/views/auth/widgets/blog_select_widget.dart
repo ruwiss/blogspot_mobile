@@ -3,7 +3,7 @@ import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../../app/app.dart';
+import '../../../../core/core.dart';
 import '../../../../commons/services/services.dart';
 import '../../../../utils/utils.dart';
 import '../models/blog_model.dart';

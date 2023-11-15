@@ -1,4 +1,4 @@
-import 'package:blogman/app/base/base_viewmodel.dart';
+import 'package:blogman/core/base/base_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class AppBarViewModel extends BaseViewModel {
