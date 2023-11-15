@@ -33,6 +33,9 @@ class PostImage extends StatelessWidget {
               top: Radius.circular(4),
             ),
             child: imageUrl != null || postModel?.image != null
+                // Post model veya image url olarak 2 farklı şekilde burası
+                // çalışacak. Eğer postModel üzerinde resim yoksa image url
+                // devreye girecek. Eğer o da resim değilse gizle
                 ? Hero(
                     tag: postModel?.image ?? imageUrl!,
                     child: FadeInImage.assetNetwork(
@@ -61,6 +64,7 @@ class PostImage extends StatelessWidget {
   }
 
   List<Widget> _scheduledView() => [
+        // Gradient efekti
         Positioned(
           top: -100,
           bottom: -100,
@@ -70,9 +74,8 @@ class PostImage extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               gradient: RadialGradient(
-                center: Alignment
-                    .center, // Gradientin merkezi (burada container'ın merkezi)
-                radius: 1, // Gradientin dışarı doğru yayılma oranı
+                center: Alignment.center,
+                radius: 1,
                 colors: [
                   Colors.black26,
                   Colors.black.withOpacity(.7),
@@ -82,6 +85,7 @@ class PostImage extends StatelessWidget {
             ),
           ),
         ),
+        // Gradient efekti üzerine zamanlanmış tarihi metin olarak göster
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

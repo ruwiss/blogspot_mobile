@@ -27,7 +27,9 @@ extension ContextExtensions on BuildContext {
       ),
     );
   }
- void showDateTimePicker({Function(DateTime dateTime)? onConfirm}) async {
+
+  // [flutter_datetime_picker_plus] paketiyle diyalog çağırıp datetime alıyoruz.
+  void showDateTimePicker({Function(DateTime dateTime)? onConfirm}) async {
     final minTime = DateTime.now();
     final maxTime = DateTime.now().add(const Duration(days: 365));
     DatePicker.showDateTimePicker(
@@ -39,7 +41,7 @@ extension ContextExtensions on BuildContext {
       locale: LocaleType.values.singleWhere(
           (e) => e.name == Localizations.localeOf(this).toString(),
           orElse: () => LocaleType.en),
-      onConfirm:onConfirm,
+      onConfirm: onConfirm,
     );
-  } 
+  }
 }

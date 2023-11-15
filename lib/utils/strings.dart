@@ -17,7 +17,7 @@ abstract class KStrings {
       };
 
   static const String privacyPolicyUrl =
-      "https://kodlayalim.net/docs/bloggerPrivacyPolicy.html";
+      "https://ruwisapps.blogspot.com/p/blogspot-mobile-privacy-policy.html";
 
   static const String createBlogUrl = "https://www.blogger.com/";
 
@@ -58,6 +58,7 @@ abstract class KStrings {
   static String approveComment(CommentModel comment) =>
       "https://www.googleapis.com/blogger/v3/blogs/${comment.blogId}/posts/${comment.postId}/comments/${comment.id}/approve";
 
-  static String createDraftContent({required String blogId, required PostFilter type}) =>
+  static String createDraftContent(
+          {required String blogId, required PostFilter type}) =>
       "https://www.googleapis.com/blogger/v3/blogs/$blogId/${type.name}?isDraft=true";
 }

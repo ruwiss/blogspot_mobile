@@ -15,6 +15,8 @@ class EditorViewModel extends BaseViewModel {
   final _dio = locator<HttpService>();
 
   bool htmlEditorView = false;
+
+  // HTML Editor için hızlı etiket ekleme butonları
   final List<String> htmlToolbar = [
     "🏷️",
     "html",
@@ -44,6 +46,7 @@ class EditorViewModel extends BaseViewModel {
 
   DateTime? publishDate;
 
+  // Mevcut paylaşımın sayfa veya post mu olduğunu getirir
   PostFilter currentPostFilter() {
     final selfLink = postModel!.selfLink;
     if (selfLink.contains('/posts/')) {
@@ -52,16 +55,19 @@ class EditorViewModel extends BaseViewModel {
     return PostFilter.pages;
   }
 
+  // HTML içerik uzunluğu sayacı
   void setContentLength(int value) {
     contentLength = value;
     notifyListeners();
   }
 
+  // İçerik zamanlama için seçilen tarihi kaydet
   void setPublishDate(DateTime? dateTime) {
     publishDate = dateTime;
     notifyListeners();
   }
 
+  // Editor için görünecek araç listesi
   final customToolBarList = [
     ToolBarStyle.undo,
     ToolBarStyle.redo,
@@ -79,6 +85,7 @@ class EditorViewModel extends BaseViewModel {
     ToolBarStyle.headerTwo,
   ];
 
+  // Sayfa açılınca gelen post verisini state üzerine kaydet
   void setPostModel(PostModel postModel) {
     _postModel = postModel;
     contentLength = postModel.content.length;
@@ -88,25 +95,32 @@ class EditorViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  // HTML düzenleyici görünümünü etkinleştir
   void setHtmlEditorView(bool value) async {
     setState(ViewState.busy);
     htmlEditorView = value;
     if (value) {
+      // Text editör üzerindeki veriyi state üzerine aktar
       postModel!.content = await editorController.getText();
+      // Ayrıca html editörde göstermek için editörün içeriğini güncelle
+      htmlController.text = postModel!.content;
     } else {
+      // Html editör üzerindeki veriyi state üzerine aktar
       postModel!.content = htmlController.text;
     }
-    if (value) htmlController.text = postModel!.content;
     notifyListeners();
     setState(ViewState.idle);
   }
 
   void setReaderComments({bool? value}) {
+    // Okuyucu yorumlarını aç veya kapat
     postModel!.readerComments = value ?? !postModel!.readerComments;
     notifyListeners();
   }
 
+  // HTML Editör için hızlı etiket ekleyici
   void addHtmlTag({required String tag}) {
+    // Buradaki etiketler eklenirken kapanış etiketi içermeyecek
     final singleTags = ['br', 'hr'];
 
     // cursor position
@@ -116,25 +130,31 @@ class EditorViewModel extends BaseViewModel {
 
     String tag1 = '<$tag>';
     String tag2 = '';
+    // Eğer mevcut etiket kapanış etiketlerinde yoksa kapanış etiketi oluştur
     if (!singleTags.contains(tag)) {
       tag2 = '</$tag>';
     }
 
+    // Eklenecek etiket metnini, HTML Editör'de imlecin olduğu yere yerleştir.
     final newText =
         "${currentText.substring(0, selection.baseOffset)} $tag1$tag2 ${currentText.substring(selection.baseOffset)}";
     htmlController.text = newText;
+    // Yerleşim sonrası imlecin konumunu etiketlerin <p> arasına </p> ayarla
     htmlController.selection =
         TextSelection.collapsed(offset: selection.baseOffset + tag1.length + 1);
   }
 
+  // Editörlerdeki veriyi state üzerine kaydet
   Future<void> updatePostContent() async => postModel!.content =
       htmlEditorView ? htmlController.text : await editorController.getText();
 
+  // İçerik güncellendiğinde ana sayfadaki verileri güncelle
   Future<void> updateHomePageModel() async {
     final homeViewModel = locator<HomeViewModel>();
     await homeViewModel.getContents();
   }
 
+  // İçeriği güncelle
   Future<bool> updateContent() async {
     addState('sendContent');
     await updatePostContent();
@@ -153,6 +173,7 @@ class EditorViewModel extends BaseViewModel {
     return true;
   }
 
+  // Paylaşılan veya zamanlanan içeriği taslak haline getir
   void convertToDraft() async {
     addState('settings');
     final response = await _dio.request(
@@ -162,10 +183,13 @@ class EditorViewModel extends BaseViewModel {
     deleteState('settings');
   }
 
+  // Taslak halinde olan içeriği yayına gönder
   Future<bool> publishDraft() async {
     addState('sendContent');
 
     Map<String, dynamic> data = {};
+
+    // İçerik zamanlanmışsa UTC zaman tipine dönüştür ve gönderime hazırla
     if (publishDate != null) {
       data['publishDate'] = publishDate!.toUtc().toIso8601String();
     }
@@ -180,6 +204,8 @@ class EditorViewModel extends BaseViewModel {
       deleteState('sendContent');
       return false;
     }
+
+    // İçerik zamanlanmışsa veya canlı paylaşılmışsa state verisini güncelle
     postModel!.status =
         publishDate != null ? PostStatus.scheduled : PostStatus.live;
 
@@ -188,10 +214,12 @@ class EditorViewModel extends BaseViewModel {
     return true;
   }
 
+  // İçeriği sil
   Future<bool> deleteContent() async {
     final response = await _dio.request(
         url: postModel!.selfLink,
         method: HttpMethod.delete,
+        // [useTrash]: Blogger üzerindeki çöp kutusuna gönderir
         data: {"useTrash": true});
 
     if (response == null) {

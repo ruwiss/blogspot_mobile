@@ -13,11 +13,13 @@ class PreviewViewModel extends BaseViewModel {
   bool _contentVisible = false;
   bool get contentVisible => _contentVisible;
 
+  // Devamını oku bölümünü gizle ve tüm içeriği göster
   void setContentVisible() {
     _contentVisible = true;
     notifyListeners();
   }
 
+  // Tek bir içeriği getir
   Future<bool> getSingleContent(String contentUrl) async {
     setState(ViewState.busy);
 
@@ -37,6 +39,7 @@ class PreviewViewModel extends BaseViewModel {
     return true;
   }
 
+  // İçerik URL adresini cihaz panosuna kopyala
   void copyUrlToClipboard() =>
       Clipboard.setData(ClipboardData(text: postModel!.url));
 }

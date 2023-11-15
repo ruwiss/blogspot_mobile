@@ -70,6 +70,7 @@ final GoRouter router = GoRouter(
   ],
 );
 
+// Sign out methodu için
 void resetApp() async {
   while (router.canPop()) {
     router.pop();

@@ -13,29 +13,40 @@ class ProfileViewModel extends BaseViewModel {
   final _dio = locator<HttpService>();
   StatisticsModel? statistics;
 
+  // Profil verilerini getir
   void getProfileValues() async {
+    // İlk girişte bloglar geliyor ancak diğer girişlerde otomatik giriş
+    // nedeniyle tekrar çekmek gerekiyor
     await getBlogsIfNotAvailable();
+
+    // İstatistikleri getir
     getStatistics();
   }
 
+  // Bloglar çekilmediyse çek
   Future<void> getBlogsIfNotAvailable() async {
     if (locator<AuthViewModel>().blogList != null) return;
     await locator<AuthViewModel>().getUserBlogs();
     locator<AuthViewModel>().setSelectedBlogFromMemory();
   }
 
+  // Kullanıcının mevcut blogunu değiştir
   void changeUserBlog(BlogModel blog) {
+    // İstatistik verilerini sıfırla
     statistics = null;
+    // Auth ve Home ekranlarındaki state verisini yeni blog ile güncelle
     locator<AuthViewModel>().setSelectedBlog(blog);
     locator<HomeViewModel>().setBlogId(blog.id);
     locator<AppSettings>().selectBlog(blog.id);
     locator<HomeViewModel>().getContents();
   }
 
+  // Mevcut blogun istatistik verilerini getir
   Future<void> getStatistics() async {
     if (statistics != null) return;
     setState(ViewState.busy);
 
+    // 1 haftalık, 1 aylık ve tüm veriler olarak ayrı ayrı getir
     const types = ['7days', '30days', 'all'];
     Map<String, String> values = {};
 

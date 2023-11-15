@@ -23,6 +23,7 @@ class CommentsView extends StatefulWidget {
 class _CommentsViewState extends State<CommentsView> {
   final _scrollController = ScrollController();
 
+  // Kaydırdıkça yükleme dinleyicisi
   void _scrollListener() {
     if (_scrollController.position.extentAfter < 500) {
       Provider.of<CommentsViewModel>(context, listen: false)
@@ -32,6 +33,7 @@ class _CommentsViewState extends State<CommentsView> {
 
   @override
   void initState() {
+    // Kaydırdıkça yükleme için dinleyiciyi başlat
     _scrollController.addListener(() => _scrollListener());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CommentsViewModel>(context, listen: false).getComments(
@@ -76,6 +78,7 @@ class _CommentsViewState extends State<CommentsView> {
   }
 
   Container _commentWidget(CommentModel comment, CommentsViewModel model) {
+    // Yoruma yanıt olarak yorum yazılmışsa
     final inReplyToComment = model.findCommentFromId(comment.inReplyTo);
     return Container(
       margin: const EdgeInsets.all(10),

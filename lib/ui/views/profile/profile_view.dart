@@ -26,6 +26,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Profil verilerini ekran açılınca getir
       locator<ProfileViewModel>().getProfileValues();
     });
     super.initState();
@@ -44,6 +45,8 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               ProfileUserInfo(user: model.user!),
               const SizedBox(height: 10),
+
+              // Blog seçim ekranı
               ProfileContainer(
                   title: 'chooseBlog'.tr(),
                   titleBgColor: KColors.bisqueColor,
@@ -70,6 +73,8 @@ class _ProfileViewState extends State<ProfileView> {
                         );
                       }),
                   ]),
+
+              // Blog istatistikleri
               Consumer<ProfileViewModel>(
                 builder: (context, value, child) => ProfileContainer(
                   title: 'statistics'.tr(),
@@ -115,6 +120,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
+  // İnceleme bekleyen yorumları göster butonu
   Widget _commentsButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 35),

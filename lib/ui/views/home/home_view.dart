@@ -28,6 +28,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final _scrollController = ScrollController();
 
+  // Geri butonuna basılırsa arama kutusu etkinse kapat
+  // Filtre uygulanmışsa filtreyi kaldır. Aksi halde uygulamadan çık
   Future<bool> _willPopScope(HomeViewModel model) async {
     final appBarViewModel = locator<AppBarViewModel>();
     if (appBarViewModel.searchEnabled) {
@@ -42,6 +44,7 @@ class _HomeViewState extends State<HomeView> {
     return true;
   }
 
+  // Kaydırdıkça yükleme dinleyicisi
   void _scrollListener(HomeViewModel model) {
     if (_scrollController.position.extentAfter < 500) {
       model.getContents(
@@ -50,8 +53,12 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void _initState(BuildContext context, HomeViewModel model) async {
+    // Splash logoyu gizle
     locator<AuthViewModel>().hideSplash();
+
+    // Kaydırdıkça yükleme için dinleyiciyi çalıştır
     _scrollController.addListener(() => _scrollListener(model));
+
     // Blog postlarını getir, hata olursa göster.
     model.setBlogId(widget.blogId);
     if (!await model.getContents() && context.mounted) context.showError();

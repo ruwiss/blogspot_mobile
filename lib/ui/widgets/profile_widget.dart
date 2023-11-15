@@ -35,6 +35,8 @@ class ProfileWidget extends StatelessWidget {
           ),
         ),
         const Spacer(),
+
+        // Post ne zaman yayınlandıysa tarih farkını hesapla ve göster
         Builder(
           builder: (context) {
             bool isUpdated = false;

@@ -25,6 +25,7 @@ class PreviewView extends StatefulWidget {
 }
 
 class _PreviewViewState extends State<PreviewView> {
+  // İçeriği ekran açılınca çağır
   void _getContent() async {
     final status = await Provider.of<PreviewViewModel>(context, listen: false)
         .getSingleContent(widget.contentUrl);
@@ -67,7 +68,9 @@ class _PreviewViewState extends State<PreviewView> {
                       child: PostImage(
                         postModel: model.postModel,
                         imageUrl: widget.previewImgUrl,
-                        hideScheduledEffect: true, // for hero animation
+                        // Hero animasyonunun görünmesi için bu ekranda
+                        // Zamanlanmış içerikler için olan efekti gizle
+                        hideScheduledEffect: true,
                       ),
                     ),
                   ),
@@ -175,6 +178,8 @@ class _PreviewViewState extends State<PreviewView> {
                   ],
                 ),
               ),
+
+        // Devamını göster butonu
         if (!model.contentVisible && model.postModel!.content.length > 1000)
           TextButton(
             onPressed: () => model.setContentVisible(),
@@ -195,6 +200,7 @@ class _PreviewViewState extends State<PreviewView> {
           child: VerticalDivider(color: KColors.blueGray, width: 15),
         );
     return [
+      // Paylaş butonu
       GestureDetector(
         onTap: () {
           model.copyUrlToClipboard();
@@ -202,7 +208,10 @@ class _PreviewViewState extends State<PreviewView> {
         },
         child: const Icon(Icons.share, color: KColors.blueGray),
       ),
+
       divider(),
+
+      // İçeriği tarayıcıda aç butonu
       GestureDetector(
         onTap: () {
           if (model.postModel != null) {
@@ -211,7 +220,10 @@ class _PreviewViewState extends State<PreviewView> {
         },
         child: const Icon(Icons.remove_red_eye, color: KColors.blueGray),
       ),
+
       divider(),
+
+      // Editör sayfasına git butonu
       GestureDetector(
         onTap: () {
           if (model.postModel != null) {
@@ -227,6 +239,7 @@ class _PreviewViewState extends State<PreviewView> {
           ),
         ),
       ),
+
       const SizedBox(width: 15),
     ];
   }

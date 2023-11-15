@@ -29,6 +29,7 @@ class AuthViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  // Sayfa açılınca, varsa gönderilen blogModel buraya kaydedilir
   void setBlogList(List<BlogModel>? blogs) {
     blogList = blogs;
     notifyListeners();
@@ -78,12 +79,15 @@ class AuthViewModel extends BaseViewModel {
     setState(ViewState.busy);
     await _googleAuth.disconnect();
     await _firebaseInstance.signOut();
+    // blog seçimini temizle
     _appSettings.removeSelectedBlog();
+    // otomatik girişi kapat
     _appSettings.setAuth(false);
     setState(ViewState.idle);
   }
 
   void setHttpAccessToken(String accessToken) {
+    // tokeni alınca tek seferlik kaydet ve buradan kullan
     locator<HttpService>().setDefaultHeaders(KStrings.httpHeaders(accessToken));
   }
 
@@ -103,27 +107,32 @@ class AuthViewModel extends BaseViewModel {
     }
     setState(ViewState.idle);
 
+    // Kullanıcı blog sahibi değilse
     if (blogs.isEmpty) return 'noBlog'.tr();
 
     setBlogList(blogs);
     return null;
   }
 
+  // Kullanıcı blog seçiyor
   void setSelectedBlog(BlogModel? blog) {
     selectedBlog = blog;
     notifyListeners();
   }
 
+  // Yeniden girişte otomatik blog seçimi
   void setSelectedBlogFromMemory() {
     final memory = _appSettings.getSelectedBlogId();
     setSelectedBlog(blogList?.singleWhere((e) => e.id == memory));
   }
 
+  // Kullanıcının seçilen blog üzerinde admin yetkisi var mı?
   Future<bool> checkUserBlogAccess() async {
     await getBlogUserInformation();
     return blogUserInfoModel?.hasAdminAccess ?? false;
   }
 
+  // Kullanıcı blog yetkisini getir
   Future<void> getBlogUserInformation() async {
     setState(ViewState.busy);
     final response = await _dio.request(

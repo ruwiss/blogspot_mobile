@@ -10,6 +10,7 @@ class CommentsViewModel extends BaseViewModel {
   CommentsModel? commentsModel;
   String? _commentToken;
 
+  // Yorumları getir
   Future<void> getComments(
       {String? commentUrl,
       bool isPending = false,
@@ -19,6 +20,7 @@ class CommentsViewModel extends BaseViewModel {
     Map<String, dynamic> data = {"view": "ADMIN"};
     if (isLoadMore) data['pageToken'] = _commentToken;
 
+    // Eğer [isPending] ise sadece incelemede olan yorumları getir
     if (isPending) data['status'] = CommentStatus.pending.name;
 
     final response = await _dio.request(
@@ -35,15 +37,18 @@ class CommentsViewModel extends BaseViewModel {
     }
 
     if (isLoadMore) {
+      // Kaydırdıkça yükleme yapmak için
       final newModel = CommentsModel.fromJson(response.data);
       commentsModel!.items.addAll(newModel.items);
       commentsModel!.pageToken = newModel.pageToken;
     } else {
+      // Kaydırdıkça yükleme değilse ilk verileri al
       commentsModel = CommentsModel.fromJson(response.data);
     }
     if (!isLoadMore) setState(ViewState.idle);
   }
 
+  // Kaydırdıkça yükleme methodu
   void loadMoreComments(String? commentUrl) async {
     const state = 'loadMore';
     if (commentsModel!.pageToken == null ||
@@ -56,6 +61,7 @@ class CommentsViewModel extends BaseViewModel {
     deleteState(state);
   }
 
+  // Yorumu, çekilen yorumlardan varsa id ile bul
   CommentModel? findCommentFromId(String? id) {
     if (id == null) return null;
     try {
@@ -66,12 +72,14 @@ class CommentsViewModel extends BaseViewModel {
     }
   }
 
+  // Silinen, onaylanan, spam olarak işaretlenen yorumu state üzerinde güncelle
   void updateComment(CommentModel oldComment, CommentModel newComment) {
     final index = commentsModel!.items.indexOf(oldComment);
     commentsModel!.items.removeAt(index);
     commentsModel!.items.insert(index, newComment);
   }
 
+  // Yorumu sil ve state güncelle
   Future<void> deleteComment(CommentModel comment) async {
     final response = await _dio.request(
         url: KStrings.deleteComment(comment), method: HttpMethod.delete);
@@ -85,6 +93,7 @@ class CommentsViewModel extends BaseViewModel {
     deleteState(comment.id);
   }
 
+  // Spam yorumu bildir
   Future<void> reportSpamComment(CommentModel comment) async {
     final response = await _dio.request(
         url: KStrings.spamComment(comment), method: HttpMethod.post);
@@ -98,6 +107,7 @@ class CommentsViewModel extends BaseViewModel {
     deleteState(comment.id);
   }
 
+  // İnceleme [isPending] bekleyen yorumu onayla
   Future<void> approveComment(CommentModel comment) async {
     final response = await _dio.request(
         url: KStrings.approveComment(comment), method: HttpMethod.post);

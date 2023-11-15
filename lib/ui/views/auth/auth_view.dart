@@ -29,14 +29,20 @@ class _AuthViewState extends State<AuthView> {
   final _authViewModel = locator<AuthViewModel>();
 
   void _authAndNavigate() async {
+    // Kullanıcı giriş işlemi başarılıysa
     if (await _authViewModel.authUser()) {
       if (context.mounted) {
+        // Daha önceden blog seçti mi kontrol et
         final selectedBlogId = _appSettings.getSelectedBlogId();
+        // Daha önceden blog seçtiyse otomatik yönlendir
         if (selectedBlogId != null) {
           context.pushReplacementNamed('home',
               pathParameters: {'blogId': selectedBlogId});
         } else {
+          // seçmediyse
+          // Splash logoyu kapat
           _authViewModel.hideSplash();
+          // BLog seçim görünümünü etkinleştir
           _showBlogSelectionDialog();
         }
       }
@@ -46,6 +52,7 @@ class _AuthViewState extends State<AuthView> {
     }
   }
 
+  // Kullanıcı bloglarını çek
   void _showBlogSelectionDialog() async {
     final String? error = await _authViewModel.getUserBlogs();
     if (error != null && context.mounted) context.showError(error: error);
@@ -53,8 +60,11 @@ class _AuthViewState extends State<AuthView> {
 
   @override
   void initState() {
+    // Eğer kullanıcı daha önce giriş yapmışsa
     _appSettings.isAuth().then((value) {
+      // Splash logoyu kapat
       if (!value) _authViewModel.hideSplash();
+      // Otomatik giriş yap ve yönlendir
       if (value && mounted) _authAndNavigate();
     });
     super.initState();
@@ -65,7 +75,7 @@ class _AuthViewState extends State<AuthView> {
     return Consumer<AuthViewModel>(
       builder: (context, model, child) => Scaffold(
         body: model.splash
-            ? const SplashView()
+            ? const SplashView() // Splash Logo
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -91,7 +101,9 @@ class _AuthViewState extends State<AuthView> {
                           ? const CircularProgressIndicator(
                               color: KColors.orange)
                           : model.blogList == null
+                              // OAuth Kullanıcı Giriş Görünümü
                               ? _authButtons(context, model)
+                              // Kullanıcı Blog Seçim Görünümü
                               : BlogSelectWidget(
                                   model: model,
                                   onError: (error) =>

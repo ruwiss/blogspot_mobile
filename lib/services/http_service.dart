@@ -54,13 +54,19 @@ class HttpService {
       return response;
     } on DioException catch (e) {
       _logException(e);
+
+      // Hata olursa 1 kez daha dene
       if (_errorCount == 0) {
         _errorCount++;
+        // Kullanıcı OAuth girişini doğrula
         if (await locator<AuthViewModel>().authUser()) {
           return await request(url: url, method: method, data: data);
         } else {
           return null;
         }
+      } else {
+        // Yeni isteklerde tekrar denemek için değeri sıfırla
+        _errorCount = 0;
       }
     }
     return null;
