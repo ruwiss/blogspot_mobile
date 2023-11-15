@@ -1,5 +1,5 @@
 import 'package:blogman/app/base/base_viewmodel.dart';
-import 'package:blogman/extensions/string_formatter.dart';
+import 'package:blogman/commons/extensions/string_formatter.dart';
 import 'package:blogman/ui/views/comments/models/comments_model.dart';
 import 'package:blogman/ui/views/comments/widgets/comment_actions.dart';
 import 'package:easy_localization/easy_localization.dart';

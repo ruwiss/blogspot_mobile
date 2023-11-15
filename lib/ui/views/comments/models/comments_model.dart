@@ -1,4 +1,4 @@
-import 'package:blogman/models/author_model.dart';
+import '../../../../commons/models/author_model.dart';
 
 enum CommentStatus { emptied, live, pending, spam, noStatus }
 

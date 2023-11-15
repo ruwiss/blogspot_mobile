@@ -1,8 +1,8 @@
-import 'package:blogman/extensions/datetime_formatter.dart';
-import 'package:blogman/models/post_model.dart';
+import 'package:blogman/commons/extensions/datetime_formatter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '../../enums/post_filter_enum.dart';
+import '../../commons/enums/post_filter_enum.dart';
+import '../../commons/models/post_model.dart';
 import '../../utils/colors.dart';
 import '../../utils/images.dart';
 

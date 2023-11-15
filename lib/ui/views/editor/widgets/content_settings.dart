@@ -1,12 +1,13 @@
-import 'package:blogman/enums/post_filter_enum.dart';
-import 'package:blogman/extensions/datetime_formatter.dart';
-import 'package:blogman/extensions/notifier.dart';
+import 'package:blogman/commons/extensions/datetime_formatter.dart';
+import 'package:blogman/commons/extensions/notifier.dart';
 import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../commons/enums/post_filter_enum.dart';
 
 class ContentSettings extends StatefulWidget {
   const ContentSettings({super.key, required this.editorContext});

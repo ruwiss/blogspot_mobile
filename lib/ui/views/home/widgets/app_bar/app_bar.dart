@@ -1,5 +1,5 @@
 import 'package:blogman/app/locator.dart';
-import 'package:blogman/extensions/theme.dart';
+import 'package:blogman/commons/extensions/theme.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/strings.dart';

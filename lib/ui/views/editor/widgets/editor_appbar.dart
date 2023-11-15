@@ -1,6 +1,5 @@
-import 'package:blogman/enums/post_filter_enum.dart';
-import 'package:blogman/extensions/context_extensions.dart';
-import 'package:blogman/extensions/notifier.dart';
+import 'package:blogman/commons/extensions/context_extensions.dart';
+import 'package:blogman/commons/extensions/notifier.dart';
 import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:blogman/ui/views/editor/widgets/content_settings.dart';
 import 'package:blogman/utils/colors.dart';
@@ -8,9 +7,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../commons/enums/post_filter_enum.dart';
+
 class EditorAppBar extends StatefulWidget implements PreferredSizeWidget {
   const EditorAppBar(
-      {super.key, required this.model, required this.title, this.actions, this.onBackPressed});
+      {super.key,
+      required this.model,
+      required this.title,
+      this.actions,
+      this.onBackPressed});
   final EditorViewModel model;
   final String title;
   final List<Widget>? actions;

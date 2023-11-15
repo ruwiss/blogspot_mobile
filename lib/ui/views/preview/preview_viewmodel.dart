@@ -1,9 +1,9 @@
-import 'package:blogman/services/http_service.dart';
-import 'package:blogman/models/post_model.dart';
 import 'package:flutter/services.dart';
 
 import '../../../app/base/base_viewmodel.dart';
 import '../../../app/locator.dart';
+import '../../../commons/models/post_model.dart';
+import '../../../commons/services/http_service.dart';
 
 class PreviewViewModel extends BaseViewModel {
   final _dio = locator<HttpService>();

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '../utils/colors.dart';
+
+import '../../utils/colors.dart';
 
 extension NotifierExtension on BuildContext {
   SnackBar _createSnackBar(bool error, {String? text}) {

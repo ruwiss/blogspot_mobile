@@ -1,5 +1,6 @@
-import 'package:blogman/enums/post_filter_enum.dart';
 import 'package:blogman/ui/views/comments/models/comments_model.dart';
+
+import '../commons/enums/post_filter_enum.dart';
 
 abstract class KStrings {
   static const String appName = 'Blogspot Mobile';

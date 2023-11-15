@@ -1,7 +1,6 @@
 import 'package:blogman/app/base/base_viewmodel.dart';
-import 'package:blogman/extensions/notifier.dart';
-import 'package:blogman/extensions/url_launcher.dart';
-import 'package:blogman/services/shared_preferences/settings.dart';
+import 'package:blogman/commons/extensions/notifier.dart';
+import 'package:blogman/commons/extensions/url_launcher.dart';
 import 'package:blogman/ui/views/auth/widgets/splash_view.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:blogman/utils/images.dart';
@@ -13,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/locator.dart';
+import '../../../commons/services/shared_preferences/settings.dart';
 import 'auth_viewmodel.dart';
 import 'widgets/auth_button.dart';
 import 'widgets/blog_select_widget.dart';

@@ -1,5 +1,4 @@
-import 'package:blogman/enums/post_filter_enum.dart';
-
+import '../enums/post_filter_enum.dart';
 import 'author_model.dart';
 
 class PostListModel {

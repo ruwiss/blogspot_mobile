@@ -7,8 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../app/base/base_viewmodel.dart';
-import '../../../services/http_service.dart';
-import '../../../services/shared_preferences/settings.dart';
+import '../../../commons/services/http_service.dart';
+import '../../../commons/services/shared_preferences/settings.dart';
 import '../../../utils/strings.dart';
 
 class AuthViewModel extends BaseViewModel {

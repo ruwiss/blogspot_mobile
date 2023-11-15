@@ -1,4 +1,4 @@
-import 'package:blogman/extensions/theme.dart';
+import 'package:blogman/commons/extensions/theme.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:blogman/ui/views/profile/profile_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
