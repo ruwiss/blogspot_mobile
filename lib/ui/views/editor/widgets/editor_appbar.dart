@@ -1,11 +1,10 @@
-import 'package:blogman/commons/extensions/context_extensions.dart';
-import 'package:blogman/commons/extensions/notifier.dart';
+import 'package:blogman/app/app.dart';
+import 'package:blogman/commons/extensions/extensions.dart';
 import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:blogman/ui/views/editor/widgets/content_settings.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../commons/enums/post_filter_enum.dart';
 

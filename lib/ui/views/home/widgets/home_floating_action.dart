@@ -1,13 +1,13 @@
 import 'package:blogman/app/locator.dart';
-import 'package:blogman/commons/extensions/notifier.dart';
+import 'package:blogman/commons/extensions/extensions.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../commons/enums/post_filter_enum.dart';
-import '../../../../commons/models/post_model.dart';
-import '../../../../utils/colors.dart';
+import '../../../../commons/models/models.dart';
+import '../../../../utils/utils.dart';
 
 class CreateContentAction extends StatefulWidget {
   const CreateContentAction({super.key, this.onDraftCreated});

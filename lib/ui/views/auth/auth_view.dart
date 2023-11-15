@@ -1,21 +1,15 @@
 import 'package:blogman/app/base/base_viewmodel.dart';
-import 'package:blogman/commons/extensions/notifier.dart';
-import 'package:blogman/commons/extensions/url_launcher.dart';
-import 'package:blogman/ui/views/auth/widgets/splash_view.dart';
-import 'package:blogman/utils/colors.dart';
-import 'package:blogman/utils/images.dart';
-import 'package:blogman/utils/strings.dart';
+import 'package:blogman/commons/extensions/extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/locator.dart';
-import '../../../commons/services/shared_preferences/settings.dart';
+import '../../../app/app.dart';
+import '../../../commons/services/services.dart';
+import '../../../utils/utils.dart';
 import 'auth_viewmodel.dart';
-import 'widgets/auth_button.dart';
-import 'widgets/blog_select_widget.dart';
+import 'widgets/auth_widgets.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({super.key});

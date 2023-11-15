@@ -1,5 +1,4 @@
 import 'package:blogman/app/base/base_viewmodel.dart';
-import 'package:blogman/app/locator.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:blogman/ui/views/auth/models/blog_model.dart';
 import 'package:blogman/ui/views/profile/profile_viewmodel.dart';
@@ -8,12 +7,11 @@ import 'package:blogman/utils/images.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/page_title.dart';
-import 'widgets/profile_container.dart';
-import 'widgets/profile_user_info.dart';
+import '../../../app/app.dart';
+import '../../widgets/widgets.dart';
+import 'widgets/profile_widgets.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -35,9 +33,7 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PageTitle(
-        title: 'yourProfile'.tr(),
-      ),
+      appBar: PageTitle(title: 'yourProfile'.tr()),
       body: Consumer<AuthViewModel>(
         builder: (context, model, child) => SingleChildScrollView(
           child: Column(

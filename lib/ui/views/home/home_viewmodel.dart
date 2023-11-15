@@ -2,8 +2,8 @@ import '../../../app/base/base_viewmodel.dart';
 import '../../../app/locator.dart';
 import '../../../commons/enums/post_filter_enum.dart';
 import '../../../commons/models/post_model.dart';
-import '../../../commons/services/http_service.dart';
-import '../../../utils/strings.dart';
+import '../../../commons/services/services.dart';
+import '../../../utils/utils.dart';
 import 'widgets/app_bar/app_bar_viewmodel.dart';
 
 class HomeViewModel extends BaseViewModel {

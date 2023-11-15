@@ -6,7 +6,7 @@ import 'package:quill_html_editor/quill_html_editor.dart';
 import '../../../app/base/base_viewmodel.dart';
 import '../../../commons/enums/post_filter_enum.dart';
 import '../../../commons/models/post_model.dart';
-import '../../../commons/services/http_service.dart';
+import '../../../commons/services/services.dart';
 
 class EditorViewModel extends BaseViewModel {
   final editorController = QuillEditorController();

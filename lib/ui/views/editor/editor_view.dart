@@ -1,14 +1,14 @@
+import 'package:blogman/app/app.dart';
 import 'package:blogman/app/base/base_viewmodel.dart';
-import 'package:blogman/commons/extensions/notifier.dart';
-import 'package:blogman/ui/views/editor/widgets/editor_appbar.dart';
+import 'package:blogman/commons/extensions/extensions.dart';
 import 'package:blogman/utils/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
-import '../../../commons/models/post_model.dart';
 import 'editor_viewmodel.dart';
+import 'widgets/editor_widgets.dart';
+import '../../../commons/models/models.dart';
 
 class EditorView extends StatefulWidget {
   const EditorView({super.key, required this.postModel});

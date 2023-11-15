@@ -1,13 +1,12 @@
 import 'package:blogman/app/locator.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
-import 'package:blogman/ui/views/auth/models/blog_model.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:blogman/ui/views/profile/models/statistics_model.dart';
-import 'package:blogman/utils/strings.dart';
 
 import '../../../app/base/base_viewmodel.dart';
-import '../../../commons/services/http_service.dart';
-import '../../../commons/services/shared_preferences/settings.dart';
+import '../../../commons/services/services.dart';
+import '../../../utils/utils.dart';
+import '../auth/models/auth_models.dart';
 
 class ProfileViewModel extends BaseViewModel {
   final _dio = locator<HttpService>();

@@ -1,10 +1,8 @@
-import 'package:blogman/commons/extensions/datetime_formatter.dart';
-import 'package:blogman/commons/extensions/string_formatter.dart';
-import 'package:blogman/utils/colors.dart';
-import 'package:blogman/utils/images.dart';
+import 'package:blogman/commons/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../commons/models/author_model.dart';
+import '../../utils/utils.dart';
 
 class ProfileWidget extends StatelessWidget {
   const ProfileWidget(

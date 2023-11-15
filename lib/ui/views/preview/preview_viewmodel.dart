@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
+import '../../../app/app.dart';
 import '../../../app/base/base_viewmodel.dart';
-import '../../../app/locator.dart';
 import '../../../commons/models/post_model.dart';
 import '../../../commons/services/http_service.dart';
 

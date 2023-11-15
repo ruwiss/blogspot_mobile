@@ -1,5 +1,6 @@
-import 'package:blogman/utils/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/utils.dart';
 
 extension ThemeDataExtension on BuildContext {
   ThemeData themeData() => ThemeData.light().copyWith(

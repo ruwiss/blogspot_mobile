@@ -1,13 +1,11 @@
 import 'dart:async';
-import 'package:blogman/app/locator.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
-import 'package:blogman/utils/images.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../commons/services/shared_preferences/settings.dart';
-import '../../../../utils/colors.dart';
+import '../../../../app/app.dart';
+import '../../../../commons/services/services.dart';
+import '../../../../utils/utils.dart';
 import '../models/blog_model.dart';
 
 class BlogSelectWidget extends StatefulWidget {

@@ -1,21 +1,17 @@
 import 'package:blogman/app/base/base_viewmodel.dart';
-import 'package:blogman/app/locator.dart';
 import 'package:blogman/commons/extensions/notifier.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
-import 'package:blogman/ui/views/home/widgets/home_floating_action.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../../app/app.dart';
 import '../../../app/base/base_view.dart';
-import '../../../commons/models/post_model.dart';
-import '../../../utils/colors.dart';
-import '../../widgets/no_item_widget.dart';
+import '../../../commons/models/models.dart';
+import '../../../utils/utils.dart';
+import '../../widgets/widgets.dart';
 import 'home_viewmodel.dart';
-import 'widgets/app_bar/app_bar.dart';
 import 'widgets/app_bar/app_bar_viewmodel.dart';
-import 'widgets/post_filter.dart';
-import 'widgets/post_item.dart';
+import 'widgets/home_widgets.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.blogId});

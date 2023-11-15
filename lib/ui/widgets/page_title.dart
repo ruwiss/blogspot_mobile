@@ -1,6 +1,7 @@
-import 'package:blogman/utils/colors.dart';
+import 'package:blogman/app/app.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+import '../../utils/utils.dart';
 
 class PageTitle extends StatelessWidget implements PreferredSizeWidget {
   const PageTitle({super.key, required this.title, this.actions});

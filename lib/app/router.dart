@@ -1,4 +1,4 @@
-import 'package:blogman/app/locator.dart';
+import 'package:blogman/app/app.dart';
 import 'package:blogman/ui/views/auth/auth_view.dart';
 import 'package:blogman/ui/views/comments/comments_view.dart';
 import 'package:blogman/ui/views/comments/comments_viewmodel.dart';
@@ -7,9 +7,8 @@ import 'package:blogman/ui/views/editor/editor_viewmodel.dart';
 import 'package:blogman/ui/views/preview/preview_view.dart';
 import 'package:blogman/ui/views/preview/preview_viewmodel.dart';
 import 'package:blogman/ui/views/profile/profile_view.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../commons/models/post_model.dart';
+import '../commons/models/models.dart';
 import '../ui/views/home/home_view.dart';
 
 final GoRouter router = GoRouter(

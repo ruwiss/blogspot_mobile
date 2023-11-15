@@ -5,8 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app/router.dart';
-import '../../../../utils/colors.dart';
-import '../../../../utils/images.dart';
+import '../../../../utils/utils.dart';
 
 class ProfileUserInfo extends StatelessWidget {
   const ProfileUserInfo({super.key, required this.user});
