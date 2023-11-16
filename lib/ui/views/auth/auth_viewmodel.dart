@@ -1,11 +1,10 @@
-import 'package:blogman/core/locator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/base/base_viewmodel.dart';
-import '../../../commons/services/services.dart';
+import '../../../core/core.dart';
 import '../../../utils/strings.dart';
 import 'models/auth_models.dart';
 

@@ -1,7 +1,7 @@
+import 'package:blogman/core/core.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:blogman/ui/views/profile/profile_viewmodel.dart';
 import 'package:get_it/get_it.dart';
-import '../commons/services/services.dart';
 import '../ui/views/home/home_viewmodel.dart';
 import '../ui/views/home/widgets/app_bar/app_bar_viewmodel.dart';
 
@@ -17,7 +17,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => AppBarViewModel());
 
   locator.registerLazySingleton(() => ProfileViewModel());
-
 }
 
 void userSignOutResetLocator() {

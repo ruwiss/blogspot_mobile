@@ -1,9 +1,8 @@
-import 'package:blogman/core/locator.dart';
 import 'package:blogman/ui/views/comments/models/comments_model.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:blogman/utils/strings.dart';
 import '../../../core/base/base_viewmodel.dart';
-import '../../../commons/services/services.dart';
+import '../../../core/core.dart';
 
 class CommentsViewModel extends BaseViewModel {
   final _dio = locator<HttpService>();

@@ -1,4 +1,3 @@
-import 'package:blogman/core/locator.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
@@ -6,7 +5,7 @@ import 'package:quill_html_editor/quill_html_editor.dart';
 import '../../../core/base/base_viewmodel.dart';
 import '../../../commons/enums/post_filter_enum.dart';
 import '../../../commons/models/post_model.dart';
-import '../../../commons/services/services.dart';
+import '../../../core/core.dart';
 
 class EditorViewModel extends BaseViewModel {
   final editorController = QuillEditorController();

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import '../../../core/core.dart';
 import '../../../core/base/base_viewmodel.dart';
 import '../../../commons/models/post_model.dart';
-import '../../../commons/services/http_service.dart';
 
 class PreviewViewModel extends BaseViewModel {
   final _dio = locator<HttpService>();

@@ -1,8 +1,7 @@
 import '../../../core/base/base_viewmodel.dart';
-import '../../../core/locator.dart';
+import '../../../core/core.dart';
 import '../../../commons/enums/post_filter_enum.dart';
 import '../../../commons/models/post_model.dart';
-import '../../../commons/services/services.dart';
 import '../../../utils/utils.dart';
 import 'widgets/app_bar/app_bar_viewmodel.dart';
 
