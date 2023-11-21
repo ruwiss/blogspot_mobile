@@ -61,8 +61,11 @@ class _EditorViewState extends State<EditorView> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) async {
+        if (await _onWillPop() && context.mounted) context.pop();
+      },
       child: Consumer<EditorViewModel>(
         builder: (context, model, child) => Container(
           color: KColors.whiteSmoke,

@@ -15,6 +15,7 @@ import 'widgets/home_widgets.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.blogId});
+
   final String blogId;
 
   @override
@@ -72,8 +73,12 @@ class _HomeViewState extends State<HomeView> {
       dispose: _dispose,
       builder: (context, model, child) {
         final PostListModel? postList = model.postListModel;
-        return WillPopScope(
-          onWillPop: () => _willPopScope(model),
+        return PopScope(
+          canPop: true,
+          onPopInvoked: (didPop) async {
+            if (didPop) return;
+            if (await _willPopScope(model) && mounted) context.pop();
+          },
           child: Scaffold(
             appBar: const HomeAppBar(),
             floatingActionButton: CreateContentAction(
@@ -87,6 +92,7 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 children: [
                   PostFilterWidget(),
+
                   const SizedBox(height: 22),
 
                   // Postlar geldiyse
@@ -122,7 +128,6 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   ],
-
                   if (model.state == ViewState.busy)
                     const Padding(
                       padding: EdgeInsets.only(top: 50),

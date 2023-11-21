@@ -4,7 +4,6 @@ import '../../utils/utils.dart';
 
 extension ThemeDataExtension on BuildContext {
   ThemeData themeData() => ThemeData.light().copyWith(
-        useMaterial3: true,
         textTheme: ThemeData.light().textTheme.apply(fontFamily: "Nunito Sans"),
         primaryTextTheme:
             ThemeData.light().textTheme.apply(fontFamily: "Nunito Sans"),
