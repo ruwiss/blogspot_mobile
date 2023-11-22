@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import '../../../commons/models/models.dart';
 import '../../../utils/utils.dart';
@@ -95,6 +96,19 @@ class _PreviewViewState extends State<PreviewView> {
                       ),
                     ),
                   ),
+
+                  // Admob Banner
+                  if (model.bannerAd != null)
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: SizedBox(
+                          width: model.bannerAd!.size.width.toDouble(),
+                          height: model.bannerAd!.size.height.toDouble(),
+                          child: AdWidget(ad: model.bannerAd!),
+                        ),
+                      ),
+                    ),
 
                   // content
                   SliverToBoxAdapter(

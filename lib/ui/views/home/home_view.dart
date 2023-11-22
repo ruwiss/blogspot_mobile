@@ -3,7 +3,9 @@ import 'package:blogman/commons/extensions/notifier.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import '../../../commons/services/ads/ads.dart';
 import '../../../core/core.dart';
 import '../../../core/base/base_view.dart';
 import '../../../commons/models/models.dart';
@@ -49,7 +51,18 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
+  void _loadAppOpenAd() {
+    final appOpenAdManager = AppOpenAdService(adUnitId: KStrings.appOpen)
+      ..loadAd();
+    // Uygulama state'ini dinle
+    AppLifecycleReactor(appOpenAdManager: appOpenAdManager)
+        .listenToAppStateChanges();
+  }
+
   void _initState(BuildContext context, HomeViewModel model) async {
+    // App Open reklamlarını hazırla
+    _loadAppOpenAd();
+
     // Splash logoyu gizle
     locator<AuthViewModel>().hideSplash();
 
@@ -74,15 +87,18 @@ class _HomeViewState extends State<HomeView> {
       builder: (context, model, child) {
         final PostListModel? postList = model.postListModel;
         return PopScope(
-          canPop: true,
+          canPop: false,
           onPopInvoked: (didPop) async {
             if (didPop) return;
-            if (await _willPopScope(model) && mounted) context.pop();
+            if (await _willPopScope(model) && mounted) SystemNavigator.pop();
           },
           child: Scaffold(
             appBar: const HomeAppBar(),
             floatingActionButton: CreateContentAction(
               onDraftCreated: (postModel) {
+                InterstitialAdService(
+                    adUnitId: KStrings.interstitial1,
+                    onLoaded: (ad) => ad.show());
                 context.pushNamed('editor', extra: postModel);
               },
             ),

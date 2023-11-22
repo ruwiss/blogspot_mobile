@@ -4,6 +4,14 @@ import '../commons/enums/post_filter_enum.dart';
 
 abstract class KStrings {
   static const String appName = 'Blogspot Mobile';
+
+  // Ad Strings
+  static const String banner1 = 'ca-app-pub-1923752572867502/1102395343';
+  static const String banner2 = 'ca-app-pub-1923752572867502/8789313674';
+  static const String interstitial1 = 'ca-app-pub-1923752572867502/4017151536';
+  static const String appOpen = 'ca-app-pub-1923752572867502/4850068662';
+
+  // Request informations
   static const List<String> authScopes = [
     "https://www.googleapis.com/auth/blogger",
     "https://www.googleapis.com/auth/blogger.readonly"
@@ -17,8 +25,9 @@ abstract class KStrings {
             "A1:E6:AA:A8:08:C9:2A:56:16:EE:2A:5C:BD:D5:22:36:A1:03:60:58",
       };
 
+  // App Links
   static const String privacyPolicyUrl =
-      "https://ruwisapps.blogspot.com/p/blogspot-mobile-privacy-policy.html";
+      "https://codestock.net/blogspot-privacy";
 
   static const String createBlogUrl = "https://www.blogger.com/";
 

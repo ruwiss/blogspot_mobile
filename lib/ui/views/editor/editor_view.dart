@@ -43,12 +43,15 @@ class _EditorViewState extends State<EditorView> {
       context.showInfo(text: 'editorExitMsg'.tr());
       return Future.value(false);
     }
+    // Göstermediyse geçiş reklamı göster
+     Provider.of<EditorViewModel>(context, listen: false).showInterstitialAd();
     return Future.value(true);
   }
 
   void _setInitialValue() {
     Provider.of<EditorViewModel>(context, listen: false)
-        .setPostModel(widget.postModel);
+      ..setPostModel(widget.postModel)
+      ..loadInterstitialAd();
   }
 
   @override
@@ -62,8 +65,9 @@ class _EditorViewState extends State<EditorView> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
+      canPop: false,
       onPopInvoked: (didPop) async {
+        if (didPop) return;
         if (await _onWillPop() && context.mounted) context.pop();
       },
       child: Consumer<EditorViewModel>(

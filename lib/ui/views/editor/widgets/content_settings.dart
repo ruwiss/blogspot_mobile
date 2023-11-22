@@ -104,9 +104,8 @@ class _ContentSettingsState extends State<ContentSettings> {
             const SizedBox(height: 16),
             if (editorViewModel.postModel!.status != PostStatus.draft)
               _settingButton(
-                text: 'convertToDraft'.tr(),
-                onTap: editorViewModel.convertToDraft,
-              ),
+                  text: 'convertToDraft'.tr(),
+                  onTap: editorViewModel.showInterstitialAd),
             if (editorViewModel.postModel!.status == PostStatus.draft &&
                 editorViewModel.currentPostFilter() != PostFilter.pages)
               _settingButton(
@@ -123,7 +122,9 @@ class _ContentSettingsState extends State<ContentSettings> {
                   }
                 },
               ),
-            _settingButton(text: 'saveSettings'.tr())
+            _settingButton(
+                text: 'saveSettings'.tr(),
+                onTap: editorViewModel.showInterstitialAd)
           ],
         ),
       ),

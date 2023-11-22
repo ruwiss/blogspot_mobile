@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -62,6 +63,7 @@ class AuthViewModel extends BaseViewModel {
 
       _appSettings.setAuth(true);
       if (kDebugMode) print("Auth Successful");
+      FirebaseAnalytics.instance.logEvent(name: 'authSuccessful');
       return true;
     } catch (e) {
       _appSettings.setAuth(false);

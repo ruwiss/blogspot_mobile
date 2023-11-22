@@ -1,5 +1,9 @@
+import 'package:blogman/commons/services/ads/ads.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
+import 'package:blogman/utils/strings.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 
 import '../../../core/base/base_viewmodel.dart';
@@ -8,6 +12,8 @@ import '../../../commons/models/post_model.dart';
 import '../../../core/core.dart';
 
 class EditorViewModel extends BaseViewModel {
+  InterstitialAd? _interstitialAd;
+
   final editorController = QuillEditorController();
   final htmlController = TextEditingController();
 
@@ -167,7 +173,8 @@ class EditorViewModel extends BaseViewModel {
       deleteState('sendContent');
       return false;
     }
-
+    showInterstitialAd();
+    FirebaseAnalytics.instance.logEvent(name: 'updateContent');
     deleteState('sendContent');
     return true;
   }
@@ -179,6 +186,9 @@ class EditorViewModel extends BaseViewModel {
         url: '${postModel!.selfLink}/revert', method: HttpMethod.post);
     if (response != null) postModel!.status = PostStatus.draft;
     await updateHomePageModel();
+    showInterstitialAd();
+
+    FirebaseAnalytics.instance.logEvent(name: 'convertToDraft');
     deleteState('settings');
   }
 
@@ -209,6 +219,9 @@ class EditorViewModel extends BaseViewModel {
         publishDate != null ? PostStatus.scheduled : PostStatus.live;
 
     await updateHomePageModel();
+    showInterstitialAd();
+
+    FirebaseAnalytics.instance.logEvent(name: 'publishDraft');
     deleteState('sendContent');
     return true;
   }
@@ -225,8 +238,24 @@ class EditorViewModel extends BaseViewModel {
       deleteState('deleteContent');
       return false;
     }
-
+    showInterstitialAd();
+    FirebaseAnalytics.instance.logEvent(name: 'deleteContent');
     await updateHomePageModel();
     return true;
+  }
+
+  void loadInterstitialAd() {
+    if (_interstitialAd == null) {
+      InterstitialAdService(
+          adUnitId: KStrings.interstitial1,
+          onLoaded: (ad) => _interstitialAd = ad);
+    }
+  }
+
+  void showInterstitialAd() async {
+    if (_interstitialAd != null) {
+      await _interstitialAd!.show();
+      _interstitialAd = null;
+    }
   }
 }

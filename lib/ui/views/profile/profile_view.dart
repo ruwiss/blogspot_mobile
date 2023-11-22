@@ -7,6 +7,7 @@ import 'package:blogman/utils/images.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/core.dart';
@@ -26,6 +27,7 @@ class _ProfileViewState extends State<ProfileView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Profil verilerini ekran açılınca getir
       locator<ProfileViewModel>().getProfileValues();
+      locator<ProfileViewModel>().loadBannerAd();
     });
     super.initState();
   }
@@ -69,7 +71,7 @@ class _ProfileViewState extends State<ProfileView> {
                         );
                       }),
                   ]),
-
+              _bannerAdWidget(),
               // Blog istatistikleri
               Consumer<ProfileViewModel>(
                 builder: (context, value, child) => ProfileContainer(
@@ -113,6 +115,19 @@ class _ProfileViewState extends State<ProfileView> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _bannerAdWidget() {
+    return Consumer<ProfileViewModel>(
+      builder: (context, model, child) {
+        if (model.bannerAd == null) return const SizedBox();
+        return SizedBox(
+          width: model.bannerAd!.size.width.toDouble(),
+          height: model.bannerAd!.size.height.toDouble(),
+          child: AdWidget(ad: model.bannerAd!),
+        );
+      },
     );
   }
 

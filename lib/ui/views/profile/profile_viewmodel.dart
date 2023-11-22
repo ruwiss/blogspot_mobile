@@ -1,6 +1,8 @@
+import 'package:blogman/commons/services/ads/ads.dart';
 import 'package:blogman/ui/views/auth/auth_viewmodel.dart';
 import 'package:blogman/ui/views/home/home_viewmodel.dart';
 import 'package:blogman/ui/views/profile/models/statistics_model.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../../core/base/base_viewmodel.dart';
 import '../../../core/core.dart';
@@ -8,6 +10,7 @@ import '../../../utils/utils.dart';
 import '../auth/models/auth_models.dart';
 
 class ProfileViewModel extends BaseViewModel {
+  BannerAd? bannerAd;
   final _dio = locator<HttpService>();
   StatisticsModel? statistics;
 
@@ -63,5 +66,15 @@ class ProfileViewModel extends BaseViewModel {
     }
     statistics = StatisticsModel.fromJson(values);
     setState(ViewState.idle);
+  }
+
+  void loadBannerAd() {
+    BannerAdService(
+      adUnitId: KStrings.banner2,
+      onLoaded: (ad) {
+        bannerAd = ad;
+        notifyListeners();
+      },
+    ).loadAd();
   }
 }

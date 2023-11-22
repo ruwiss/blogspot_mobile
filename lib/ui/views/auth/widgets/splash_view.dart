@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:blogman/utils/images.dart';
 import 'package:flutter/material.dart';
 
@@ -11,14 +13,24 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   bool _opacity = false;
 
+  void _setAnimation() {
+    Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      // Opacity true olduysa (dispose olduysa) state yenilenmesin
+      if (!_opacity) setState(() => _opacity = true);
+      timer.cancel();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 500), () {
-      setState(() {
-        _opacity = true;
-      });
-    });
+    _setAnimation();
+  }
+
+  @override
+  void dispose() {
+    _opacity = true;
+    super.dispose();
   }
 
   @override
