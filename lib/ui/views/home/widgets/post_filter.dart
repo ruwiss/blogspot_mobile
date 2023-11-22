@@ -55,7 +55,7 @@ class PostFilterWidget extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10),
       child: PopupMenuButton(
         onSelected: (value) => _homeViewModel.setOrder(value),
-        constraints: const BoxConstraints(maxWidth: 120),
+        constraints: const BoxConstraints(maxWidth: 130),
         itemBuilder: (context) => [
           if (_homeViewModel.isFilterChanged)
             _otherFilterItem(OtherFilter.defaultValues),
@@ -83,17 +83,21 @@ class PostFilterWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            switch (filter) {
-              (OtherFilter.defaultValues) => 'defaultValues'.tr(),
-              (OtherFilter.scheduled) => 'scheduled'.tr(),
-              (OtherFilter.ascending) => 'ascending'.tr(),
-              (OtherFilter.descending) => 'descending'.tr(),
-            },
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight:
-                    isDefaultValues ? FontWeight.w800 : FontWeight.w600),
+          Flexible(
+            child: Text(
+              switch (filter) {
+                (OtherFilter.defaultValues) => 'defaultValues'.tr(),
+                (OtherFilter.scheduled) => 'scheduled'.tr(),
+                (OtherFilter.ascending) => 'ascending'.tr(),
+                (OtherFilter.descending) => 'descending'.tr(),
+              },
+              overflow: TextOverflow.clip,
+              maxLines: 1,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight:
+                      isDefaultValues ? FontWeight.w800 : FontWeight.w600),
+            ),
           ),
           if (icon != null) Icon(icon, color: Colors.white, size: 16),
         ],
